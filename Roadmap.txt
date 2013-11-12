@@ -1,0 +1,5 @@
+Programmfunktionen klären: Wieviele Eingänge (variabel?), wieviele Zwischenvariablen
+Klassendefinition
+Ausgabe KV-Diagramm
+Einlesen der Daten
+Algorithmus implementieren
