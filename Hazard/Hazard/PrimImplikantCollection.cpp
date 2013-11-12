@@ -5,40 +5,39 @@
 
 using namespace std;
 
-void PrimImplikantCollection::add(PrimImplikant &PI)
+void PrimImplikantCollection::add(PrimImplikant* &PI)
 {
 	PIVector.push_back(PI);
 }
 void PrimImplikantCollection::add(string input)
 {
-	PrimImplikant PI(input);
+	PrimImplikant* PI = new PrimImplikant(input);
 	PIVector.push_back(PI);
 }
 void PrimImplikantCollection::add(int input)
 {
-	PrimImplikant PI(input);
+	PrimImplikant* PI = new PrimImplikant(input);
 	PIVector.push_back(PI);
 }
 
 bool PrimImplikantCollection::valueAt(int position)
 {
-	for (vector<PrimImplikant>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
-		if (i->valueAt(position))
+	for (vector<PrimImplikant*>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
+		if ((*i)->valueAt(position))
 			return true;
 	return false;
 }
 
-vector<PrimImplikant> PrimImplikantCollection::primImplikantenAt(int position)
+PrimImplikantCollection PrimImplikantCollection::primImplikantenAt(int position)
 {
-	vector<PrimImplikant> pic;
-	for (vector<PrimImplikant>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
-		if (i->valueAt(position))
-			pic.push_back(*i);
+	PrimImplikantCollection pic;
+	for (vector<PrimImplikant*>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
+		if ((*i)->valueAt(position))
+			pic.add(*i);
 	return pic;
 }
 
-PrimImplikant PrimImplikantCollection::solveNextHazard()
+unsigned int PrimImplikantCollection::size()
 {
-	PrimImplikant PI(0);
-	return PI;
+	return this->PIVector.size();
 }

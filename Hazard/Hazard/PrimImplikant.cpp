@@ -1,6 +1,6 @@
+#include "stdafx.h"
 #include <string>
 #include <vector>
-#include "stdafx.h"
 #include "PrimImplikant.h"
 
 using namespace std;
@@ -18,7 +18,7 @@ void PrimImplikant::parser(string input) {  // Analyser
 	int implikant = 0;
 	string text0 = "";
 	string text1 = "";
-	for (int i = 0; i < input.size(); i++)
+	for (unsigned int i = 0; i < input.size(); i++)
 	{
 		char c = input[i];
 		if (c == 'x' || c == 'X')
