@@ -19,11 +19,15 @@ public:
 	unsigned int size();
 	PrimImplikant* back();
 	PrimImplikant* front();
-	PrimImplikant* at();
+	PrimImplikant* at(int const &index);
 	PrimImplikant* operator[](int const &index);
 	const PrimImplikant* operator[](int const &index) const;	
 	
-	~PrimImplikantCollection();	// destructor
+	~PrimImplikantCollection()	// destructor
+	{
+		for (unsigned int i = 0; i < this->size(); i++)
+			delete this->at(i);
+	}
 private:
 	vector<PrimImplikant*> PIVector;
 };

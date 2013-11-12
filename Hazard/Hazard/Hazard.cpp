@@ -12,8 +12,8 @@
 
 using namespace std;
 
-unsigned int dimension = 0;
-unsigned int numElements = 0;
+unsigned int dimension = 0;			// = variables.size()
+unsigned int numElements = 0;		// = 2 ^ dimension
 bool KNF = false;
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -28,7 +28,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		system("pause");
 		return -1;
 	}
-	fopen_s(&error, "..\\res\\errorParser.txt", "w");
+	fopen_s(&error, "..\\res\\errorParser.txt", "a");
 	if (error == 0)
 	{
 		cout << "Fehler Fehlerdatei";

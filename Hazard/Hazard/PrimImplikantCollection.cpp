@@ -41,3 +41,18 @@ unsigned int PrimImplikantCollection::size()
 {
 	return this->PIVector.size();
 }
+
+PrimImplikant* PrimImplikantCollection::back()
+{
+	return this->PIVector.back();
+}
+
+PrimImplikant* PrimImplikantCollection::front()
+{
+	return this->PIVector.front();
+}
+
+PrimImplikant* PrimImplikantCollection::at(int const &index)
+{
+	return this->PIVector.at(index);
+}

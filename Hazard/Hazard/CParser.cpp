@@ -118,8 +118,8 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 				else if ((yylval.i == 0) ^ KNF)
 				{
 					fprintf(IP_Error, "*** FATAL ERROR *** You can only define either KNF or DNF!\n");
-					fprintf(IP_Error, "In line %3d: %s>%i", pic->back()->name, yylval.i);
-					fprintf(IP_Error, "In line %3d: Defined was: %s, but now shall be changed to %s", (int)IP_LineNumber, KNF ? "KNF" : "DNF", KNF ? "DNF" : "KNF");
+					fprintf(IP_Error, "In line %3d: %s>%i\n", (int)IP_LineNumber, pic->back()->name.c_str(), yylval.i);
+					fprintf(IP_Error, "In line %3d: Defined was: %s, but now shall be changed to %s\n\n", (int)IP_LineNumber, KNF ? "KNF" : "DNF", KNF ? "DNF" : "KNF");
 					printf("*** FATAL ERROR *** You can only define either KNF or DNF!\n");
 					return 1;
 				}
