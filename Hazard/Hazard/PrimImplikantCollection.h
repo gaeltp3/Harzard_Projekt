@@ -15,9 +15,15 @@ public:
 
 	bool valueAt(int position);
 	PrimImplikantCollection primImplikantenAt(int position);
+
 	unsigned int size();
-	void deleteAll();
+	PrimImplikant* back();
+	PrimImplikant* front();
+	PrimImplikant* at();
+	PrimImplikant* operator[](int const &index);
+	const PrimImplikant* operator[](int const &index) const;	
 	
+	~PrimImplikantCollection();	// destructor
 private:
 	vector<PrimImplikant*> PIVector;
 };

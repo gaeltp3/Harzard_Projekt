@@ -111,9 +111,15 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			if (tok == INTEGER1)
 			{
 				if (!KNFset)
+				{
 					KNF = (yylval.i == 0);
+					KNFset = true;
+				}
 				else if ((yylval.i == 0) ^ KNF)
 				{
+					fprintf(IP_Error, "*** FATAL ERROR *** You can only define either KNF or DNF!\n");
+					fprintf(IP_Error, "In line %3d: %s>%i", pic->back()->name, yylval.i);
+					fprintf(IP_Error, "In line %3d: Defined was: %s, but now shall be changed to %s", (int)IP_LineNumber, KNF ? "KNF" : "DNF", KNF ? "DNF" : "KNF");
 					printf("*** FATAL ERROR *** You can only define either KNF or DNF!\n");
 					return 1;
 				}
@@ -332,7 +338,10 @@ int CParser::yylex()
 									}else
 										PushString((char)c);
 			break;
-			default: printf("***Fatal Error*** Wrong case label in yylex\n");
+			default:
+				fprintf(IP_Error, "*** FATAL ERROR *** Wrong case label in yylex\n");
+				fprintf(IP_Error, "In line %3d: state %i", IP_LineNumber, s);
+				printf("***Fatal Error*** Wrong case label in yylex\n");
 		}
 	}
 }

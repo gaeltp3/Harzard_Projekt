@@ -28,14 +28,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		system("pause");
 		return -1;
 	}
-	fopen_s(&error, "..\\res\\error.txt", "w");
+	fopen_s(&error, "..\\res\\errorParser.txt", "w");
 	if (error == 0)
 	{
 		cout << "Fehler Fehlerdatei";
 		system("pause");
 		return -1;
 	}
-	fopen_s(&list, "..\\res\\list.txt", "w");
+	fopen_s(&list, "..\\res\\listParser.txt", "w");
 	if (list == 0)
 	{
 		cout << "Fehler Listdatei";
@@ -51,7 +51,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	parser.pr_tokentable();
 	parser.InitParse(input, error, list);
 	if (parser.yyparse(globalPIC, variables) != 0)
+	{
+		system("pause");
 		return 1;
+	}
 	system("pause");
 	
 	/*pic.add(7);
@@ -79,7 +82,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	vector<Cell*> cells;
 	cells.resize(numElements);
-	for (int i = 0; i < numElements; i++)
+	for (unsigned int i = 0; i < numElements; i++)
 	{
 		cells[i] = new Cell(i, globalPIC);
 		printf("Pos %2d: %d\n", i, cells[i]->value);
