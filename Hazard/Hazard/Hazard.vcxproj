@@ -79,7 +79,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cparser.h" />
+    <ClInclude Include="Cell.h" />
+    <ClInclude Include="CParser.h" />
     <ClInclude Include="PrimImplikant.h" />
     <ClInclude Include="PrimImplikantCollection.h" />
     <ClInclude Include="stdafx.h" />

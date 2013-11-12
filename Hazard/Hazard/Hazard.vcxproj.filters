@@ -30,7 +30,10 @@
     <ClInclude Include="PrimImplikantCollection.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Cparser.h">
+    <ClInclude Include="Cell.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="CParser.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

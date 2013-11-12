@@ -8,7 +8,9 @@ using namespace std;
 #define	Getc(s)			getc(s)
 #define	Ungetc(c)		{ungetc(c,IP_Input); ugetflag=1;}
 
-
+extern unsigned int dimension;
+extern unsigned int numElements;
+extern bool KNF;
 
 // Adds a character to the string value
 void CParser::PushString(char c)
@@ -48,14 +50,18 @@ void CParser::pr_tokentable()
 }
 //------------------------------------------------------------------------
 
-int	CParser::yyparse()
+int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 {
+	bool KNFset = false;
 	int tok;
 	if(prflag)fprintf(IP_List,"%5d ",(int)IP_LineNumber);
+
 	/*
 	*	Go parse things!
 	*/
 	parsestate pState = P_START;
+	
+
 	while ((tok=yylex())!=0){
 		switch (pState)
 		{
@@ -74,7 +80,8 @@ int	CParser::yyparse()
 			switch(tok)
 			{
 			case IDENTIFIER:
-				printf("Variable %s",yylval.s.c_str());
+				printf("Variable %s\n", yylval.s.c_str());
+				variables->push_back(yylval.s.c_str());
 				break;
 			case TERMS:
 				pState = P_TERMS_KEY;
@@ -85,10 +92,12 @@ int	CParser::yyparse()
 			switch(tok)
 			{
 			case STRING1:
-				printf("Term Key %s",yylval.s.c_str());
+				printf("Term Key %s\n", yylval.s.c_str());
+				pic->add(yylval.s.c_str());
 				break;
 			case INTEGER1:
-				printf("Term Key %d",yylval.i);
+				printf("Term Key %d\n",yylval.i);
+				pic->add(yylval.i);
 				break;
 			case (int)'>':
 				pState = P_TERMS_VALUE;
@@ -101,13 +110,23 @@ int	CParser::yyparse()
 		case P_TERMS_VALUE:
 			if (tok == INTEGER1)
 			{
-				printf("Term Value %d",yylval.i);
+				if (!KNFset)
+					KNF = (yylval.i == 0);
+				else if ((yylval.i == 0) ^ KNF)
+				{
+					printf("*** FATAL ERROR *** You can only define either KNF or DNF!\n");
+					return 1;
+				}
+
+				printf("Term Value %d\n\n",yylval.i);
 				pState = P_TERMS_KEY;
 			}
 			break;
 		}
-		printf("\n");
 	}
+
+	dimension = variables->size();
+	numElements = (unsigned int)pow(2.0f, (int)dimension);
 	return 0;
 
 }
