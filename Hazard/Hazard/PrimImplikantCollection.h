@@ -11,17 +11,18 @@ class PrimImplikantCollection{
 public:
 	void add(PrimImplikant* &PI);
 	void add(string input);
-	void add(int input);
+	void add(unsigned int input);
+	void add(unsigned int input1, unsigned int input2);
 
-	bool valueAt(int position);
-	PrimImplikantCollection primImplikantenAt(int position);
+	bool valueAt(unsigned int position);
+	PrimImplikantCollection primImplikantenAt(unsigned int position);
 
 	unsigned int size();
 	PrimImplikant* back();
 	PrimImplikant* front();
-	PrimImplikant* at(int const &index);
-	PrimImplikant* operator[](int const &index);
-	const PrimImplikant* operator[](int const &index) const;	
+	PrimImplikant* at(unsigned int const &index);
+	PrimImplikant* operator[](unsigned int const &index);
+	const PrimImplikant* operator[](unsigned int const &index) const;	
 	
 	~PrimImplikantCollection()	// destructor
 	{

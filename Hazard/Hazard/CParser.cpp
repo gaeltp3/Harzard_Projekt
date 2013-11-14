@@ -54,7 +54,7 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 {
 	bool KNFset = false;
 	int tok;
-	if(prflag)fprintf(IP_List,"%5d ",(int)IP_LineNumber);
+	if(prflag)fprintf(IP_List,"%5d ", IP_LineNumber);
 
 	/*
 	*	Go parse things!
@@ -96,7 +96,7 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 				pic->add(yylval.s.c_str());
 				break;
 			case INTEGER1:
-				printf("Term Key %d\n",yylval.i);
+				printf("Term Key %d\n", (unsigned int)yylval.i);
 				pic->add(yylval.i);
 				break;
 			case (int)'>':

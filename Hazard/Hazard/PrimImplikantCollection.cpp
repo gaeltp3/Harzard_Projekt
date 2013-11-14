@@ -14,13 +14,18 @@ void PrimImplikantCollection::add(string input)
 	PrimImplikant* PI = new PrimImplikant(input);
 	PIVector.push_back(PI);
 }
-void PrimImplikantCollection::add(int input)
+void PrimImplikantCollection::add(unsigned int input)
 {
 	PrimImplikant* PI = new PrimImplikant(input);
 	PIVector.push_back(PI);
 }
+void PrimImplikantCollection::add(unsigned int input1, unsigned int input2)
+{
+	PrimImplikant* PI = new PrimImplikant(input1, input2);
+	PIVector.push_back(PI);
+}
 
-bool PrimImplikantCollection::valueAt(int position)
+bool PrimImplikantCollection::valueAt(unsigned int position)
 {
 	for (vector<PrimImplikant*>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
 		if ((*i)->valueAt(position))
@@ -28,7 +33,7 @@ bool PrimImplikantCollection::valueAt(int position)
 	return false;
 }
 
-PrimImplikantCollection PrimImplikantCollection::primImplikantenAt(int position)
+PrimImplikantCollection PrimImplikantCollection::primImplikantenAt(unsigned int position)
 {
 	PrimImplikantCollection pic;
 	for (vector<PrimImplikant*>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
@@ -52,7 +57,7 @@ PrimImplikant* PrimImplikantCollection::front()
 	return this->PIVector.front();
 }
 
-PrimImplikant* PrimImplikantCollection::at(int const &index)
+PrimImplikant* PrimImplikantCollection::at(unsigned int const &index)
 {
 	return this->PIVector.at(index);
 }

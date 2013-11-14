@@ -5,17 +5,16 @@
 
 using namespace std;
 
-bool PrimImplikant::valueAt(int pos) {
-	for (vector<int>::iterator i = implikanten.begin(); i < implikanten.end(); ++i)
-	{
+bool PrimImplikant::valueAt(unsigned int pos) {
+	for (vector<unsigned int>::iterator i = implikanten.begin(); i < implikanten.end(); ++i)
 		if (*i == pos)
 			return true;
-	}
+
 	return false;
 }
 
 void PrimImplikant::parser(string input) {  // Analyser
-	int implikant = 0;
+	unsigned int implikant = 0;
 	string text0 = "";
 	string text1 = "";
 	for (unsigned int i = 0; i < input.size(); i++)
@@ -37,7 +36,7 @@ void PrimImplikant::parser(string input) {  // Analyser
 			return;
 		}
 		implikant <<= 1;	// *2
-		implikant += (int)c - (int)'0';
+		implikant += (unsigned int)c - (unsigned int)'0';
 	}
 	implikanten.push_back(implikant);
 }
