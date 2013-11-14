@@ -80,14 +80,58 @@ int _tmain(int argc, _TCHAR* argv[])
 			cout << endl;
 	}*/
 
+	
+	// initialize Cells
 	vector<Cell*> cells;
 	cells.resize(numElements);
+	unsigned int numOnes = 0;
 	for (unsigned int i = 0; i < numElements; i++)
 	{
 		cells[i] = new Cell(i, globalPIC);
 		printf("Pos %2d: %d\n", i, cells[i]->value);
+		if (cells[i]->value)
+			numOnes++;
 	}
 
+
+	// find hazards
+	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
+	{
+		for (unsigned int i = 0; i < numElements; i++)
+		{
+			cout << "\nSchachbrettmuster\n";
+			unsigned int grayI = i ^ (i/2);								// transform to gray code
+			vector<Cell*> hazardousNeighbors = cells[grayI]->GetHazards();
+
+			if (hazardousNeighbors.size() == 0)							// we found no hazard
+				continue;
+
+			for (vector<Cell*>::iterator c = hazardousNeighbors.begin(); c < hazardousNeighbors.end(); c++)
+			{
+				printf("Hazard found! Cell %d <--> Cell %d\n", grayI, (*c)->index);
+				globalPIC->add(grayI, (*c)->index);						// add PI that solves hazard. Not quite smart...
+			}
+		}
+	}
+	else																// less 1 than 0 --> only check every 1 --> less than 50% (numOnes/numElements) of cells are checked
+	{
+		for (unsigned int i = 0; i < numElements; i++)
+		{
+			cout << "\nÜberspringe Nullen\n";
+			if (!cells[i]->value)
+				continue;
+			vector<Cell*> hazardousNeighbors = cells[i]->GetHazards();
+
+			if (hazardousNeighbors.size() == 0)						// we found no hazard
+				continue;
+
+			for (vector<Cell*>::iterator c = hazardousNeighbors.begin(); c < hazardousNeighbors.end(); c++)
+			{
+				printf("Hazard found! Cell %d <--> Cell %d\n", i, (*c)->index);
+				globalPIC->add(i, (*c)->index);						// add PI that solves hazard. Not quite smart...
+			}
+		}
+	}
 	system("pause");
 	return 0;
 }
