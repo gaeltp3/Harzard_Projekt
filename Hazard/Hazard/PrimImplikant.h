@@ -30,7 +30,7 @@ public:
 		_itoa_s(input1, nameC, sizeof(uint)*8+1, 10);
 		name = nameC;
 		_itoa_s(input2, nameC, sizeof(uint)*8+1, 10);
-		name.append(" & ");
+		name.append("|");
 		name.append(nameC);
 
 		implikanten.push_back(input1);
