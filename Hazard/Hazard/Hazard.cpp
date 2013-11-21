@@ -89,7 +89,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	for (uint i = 0; i < numElements; i++)
 	{
 		cells[i] = new Cell(i, globalPIC);
-		printf("Pos %2d: %d\n", i, cells[i]->value);
 		if (cells[i]->value)
 			numOnes++;
 	}
