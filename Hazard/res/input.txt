@@ -1,4 +1,4 @@
-Variables: a, b, c, d
+Variables: a, bar, char, d
 Terms:
 "0010">1
 7>1

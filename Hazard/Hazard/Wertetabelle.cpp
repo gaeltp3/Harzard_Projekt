@@ -35,15 +35,13 @@ void Wertetabelle::Print()
 string Wertetabelle::makeHeader()
 {
 	bool setPad = padding.size() == 0;
-	if (setPad)
-		padding.resize(dimension);
 
 	string row2 = "|";
 	for (vector<string>::iterator v = variables->begin(); v < variables->end(); v++)
 	{
 		row2 += " " + *v;
 		if (setPad)
-			padding.push_back(((*v).size()-1) / 2.0f);
+			padding.push_back((v->size()-1) / 2.0f);
 	}
 	
 	row2 += " | y |";
