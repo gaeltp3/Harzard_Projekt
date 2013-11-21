@@ -49,7 +49,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	CParser parser;
 	parser.IP_init_token_table();
-	parser.pr_tokentable();
 	parser.InitParse(input, error, list);
 	if (parser.yyparse(globalPIC, variables) != 0)
 	{

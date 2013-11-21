@@ -80,10 +80,11 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			switch(tok)
 			{
 			case IDENTIFIER:
-				printf("Variable %s\n", yylval.s.c_str());
+				fprintf(IP_List, "Variable %s\n", yylval.s.c_str());
 				variables->push_back(yylval.s.c_str());
 				break;
 			case TERMS:
+				fprintf(IP_List, "\n", yylval.s.c_str());
 				pState = P_TERMS_KEY;
 				break;
 			}
@@ -92,11 +93,11 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			switch(tok)
 			{
 			case STRING1:
-				printf("Term Key %s\n", yylval.s.c_str());
+				fprintf(IP_List, "Term Key %s\n", yylval.s.c_str());
 				pic->add(yylval.s.c_str());
 				break;
 			case INTEGER1:
-				printf("Term Key %d\n", (unsigned int)yylval.i);
+				fprintf(IP_List, "Term Key %d\n", (unsigned int)yylval.i);
 				pic->add(yylval.i);
 				break;
 			case (int)'>':
@@ -124,7 +125,7 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 					return 1;
 				}
 
-				printf("Term Value %d\n\n",yylval.i);
+				fprintf(IP_List, "Term Value %d\n\n",yylval.i);
 				pState = P_TERMS_KEY;
 			}
 			break;
