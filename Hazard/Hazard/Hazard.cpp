@@ -103,9 +103,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
 	{
 		cout << "\nHazard-Algorithmus: Schachbrettmuster\n";
-		for (uint i = 0; i < numElements; i++)
+		for (uint i = 0; i < numElements; i += 2)
 		{
 			uint grayI = i ^ (i/2);								// transform to gray code
+			cout << "   Checking cell " << grayI << endl;
 			vector<Cell*> hazardousNeighbors = cells[grayI]->GetHazards();
 
 			if (hazardousNeighbors.size() == 0)							// we found no hazard
@@ -125,6 +126,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			if (!cells[i]->value)
 				continue;
+
+			cout << "   Checking cell " << i << endl;
 			vector<Cell*> hazardousNeighbors = cells[i]->GetHazards();
 
 			if (hazardousNeighbors.size() == 0)						// we found no hazard
