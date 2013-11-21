@@ -1,4 +1,4 @@
-// Hazard.cpp : Definiert den Einstiegspunkt für die Konsolenanwendung.
+// Hazard.cpp : Definiert den Einstiegspunkt f�r die Konsolenanwendung.
 //
 
 #include "stdafx.h"
@@ -9,6 +9,7 @@
 #include "PrimImplikant.h"
 #include "PrimImplikantCollection.h"
 #include "Cell.h"
+#include "Wertetabelle.h"
 
 using namespace std;
 
@@ -93,11 +94,16 @@ int _tmain(int argc, _TCHAR* argv[])
 			numOnes++;
 	}
 
+	
+	Wertetabelle* wt = new Wertetabelle(&cells, variables);
+	wt->Print();
+	delete wt;
+
 
 	// find hazards
 	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
 	{
-		cout << "\nSchachbrettmuster\n";
+		cout << "\nHazard-Algorithmus: Schachbrettmuster\n";
 		for (uint i = 0; i < numElements; i++)
 		{
 			uint grayI = i ^ (i/2);								// transform to gray code
@@ -115,7 +121,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	else																// less 1 than 0 --> only check every 1 --> less than 50% (numOnes/numElements) of cells are checked
 	{
-		cout << "\nÜberspringe Nullen\n";
+		cout << "\nHazard-Algorithmus: Ueberspringe Nullen\n";
 		for (uint i = 0; i < numElements; i++)
 		{
 			if (!cells[i]->value)
