@@ -25,8 +25,9 @@ void Wertetabelle::Print()
 		this->printPrimImplikanten(i);						//	=>                       0 0x1 4
 		cout << endl;
 
-		if (i > 0 && i % 20 == 0 && i - numElements > 5)
-			cout << this->makeHeader() << endl;
+		if (i > 0 && i % 15 == 0 && numElements - i > 5)
+			//cout << this->makeHeader() << endl;
+			printHeader();
 	}
 
 	cout << string(this->width, '-');
