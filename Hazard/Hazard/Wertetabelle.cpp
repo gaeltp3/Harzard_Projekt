@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include "Cell.h"
 #include "PrimImplikant.h"
 #include "Wertetabelle.h"
@@ -17,12 +18,14 @@ void Wertetabelle::Print()
 
 	for (uint i = 0; i < numElements; i++)
 	{
-		cout << "|";										//	=> |
-		this->printI(i);									//	=>   0    1    0 0
-		cout << "| ";										//	=>                 |
-		cout << (*this->cells)[i]->value;					//	=>                   1
-		cout << " |";										//	=>                     |
-		this->printPrimImplikanten(i);						//	=>                       0 0x1 4
+		cout << "| ";													//	=> |
+		cout << setfill(' ') << setw(ceil(log10((float)numElements))) << i;	//	=>    4
+		cout << " |";													//	=>      |
+		this->printI(i);												//	=>        0    1    0 0
+		cout << "| ";													//	=>                      |
+		cout << (*this->cells)[i]->value;								//	=>                        1
+		cout << " |";													//	=>                          |
+		this->printPrimImplikanten(i);									//	=>                            0 0x1 4
 		cout << endl;
 
 		if (i > 0 && i % 15 == 0 && numElements - i > 5)
@@ -37,7 +40,7 @@ string Wertetabelle::makeHeader()
 {
 	bool setPad = padding.size() == 0;
 
-	string row2 = "|";
+	string row2 = "|" + string(ceil(log10((float)numElements)) + 2, ' ') + "|";
 	for (vector<string>::iterator v = variables->begin(); v < variables->end(); v++)
 	{
 		row2 += " " + *v;
