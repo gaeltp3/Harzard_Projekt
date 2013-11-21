@@ -22,7 +22,6 @@ public:
 		this->value = this->primImplikanten.size() > 0;
 	}
 
-private:
 	PrimImplikantCollection primImplikanten;
 };
 
