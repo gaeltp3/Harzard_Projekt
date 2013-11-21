@@ -16,20 +16,20 @@ public:
 		name = input;
 		parser(input);
 	}
-	PrimImplikant(unsigned int input)
+	PrimImplikant(uint input)
 	{
-		char nameC[sizeof(unsigned int)*8+1];
-		_itoa_s(input, nameC, sizeof(unsigned int)*8+1, 10);
+		char nameC[sizeof(uint)*8+1];
+		_itoa_s(input, nameC, sizeof(uint)*8+1, 10);
 		name = nameC;
 
 		implikanten.push_back(input);
 	}
-	PrimImplikant(unsigned int input1, unsigned int input2)
+	PrimImplikant(uint input1, uint input2)
 	{
-		char nameC[sizeof(unsigned int)*8+1];
-		_itoa_s(input1, nameC, sizeof(unsigned int)*8+1, 10);
+		char nameC[sizeof(uint)*8+1];
+		_itoa_s(input1, nameC, sizeof(uint)*8+1, 10);
 		name = nameC;
-		_itoa_s(input2, nameC, sizeof(unsigned int)*8+1, 10);
+		_itoa_s(input2, nameC, sizeof(uint)*8+1, 10);
 		name.append(" & ");
 		name.append(nameC);
 
@@ -37,11 +37,11 @@ public:
 		implikanten.push_back(input2);
 	}
 
-	bool PrimImplikant::valueAt(unsigned int position);
+	bool PrimImplikant::valueAt(uint position);
 	void PrimImplikant::parser(string input);
 	
 
 private:
-	vector<unsigned int> implikanten;
+	vector<uint> implikanten;
 };
 #endif

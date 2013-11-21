@@ -12,8 +12,8 @@
 
 using namespace std;
 
-unsigned int dimension = 0;			// = variables.size()
-unsigned int numElements = 0;		// = 2 ^ dimension
+uint dimension = 0;			// = variables.size()
+uint numElements = 0;		// = 2 ^ dimension
 bool KNF = false;
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -84,8 +84,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	// initialize Cells
 	vector<Cell*> cells;
 	cells.resize(numElements);
-	unsigned int numOnes = 0;
-	for (unsigned int i = 0; i < numElements; i++)
+	uint numOnes = 0;
+	for (uint i = 0; i < numElements; i++)
 	{
 		cells[i] = new Cell(i, globalPIC);
 		printf("Pos %2d: %d\n", i, cells[i]->value);
@@ -97,10 +97,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	// find hazards
 	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
 	{
-		for (unsigned int i = 0; i < numElements; i++)
+		for (uint i = 0; i < numElements; i++)
 		{
 			cout << "\nSchachbrettmuster\n";
-			unsigned int grayI = i ^ (i/2);								// transform to gray code
+			uint grayI = i ^ (i/2);								// transform to gray code
 			vector<Cell*> hazardousNeighbors = cells[grayI]->GetHazards();
 
 			if (hazardousNeighbors.size() == 0)							// we found no hazard
@@ -115,7 +115,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	else																// less 1 than 0 --> only check every 1 --> less than 50% (numOnes/numElements) of cells are checked
 	{
-		for (unsigned int i = 0; i < numElements; i++)
+		for (uint i = 0; i < numElements; i++)
 		{
 			cout << "\nÜberspringe Nullen\n";
 			if (!cells[i]->value)

@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
-
+typedef unsigned short ushort;
+typedef unsigned int uint;
 
 // TODO: Hier auf zusätzliche Header, die das Programm erfordert, verweisen.
