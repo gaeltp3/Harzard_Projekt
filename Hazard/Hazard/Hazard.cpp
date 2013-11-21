@@ -1,4 +1,4 @@
-// Hazard.cpp : Definiert den Einstiegspunkt für die Konsolenanwendung.
+// Hazard.cpp : Definiert den Einstiegspunkt fÃ¼r die Konsolenanwendung.
 //
 
 #include "stdafx.h"
@@ -97,9 +97,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	// find hazards
 	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
 	{
+		cout << "\nSchachbrettmuster\n";
 		for (uint i = 0; i < numElements; i++)
 		{
-			cout << "\nSchachbrettmuster\n";
 			uint grayI = i ^ (i/2);								// transform to gray code
 			vector<Cell*> hazardousNeighbors = cells[grayI]->GetHazards();
 
@@ -115,9 +115,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	else																// less 1 than 0 --> only check every 1 --> less than 50% (numOnes/numElements) of cells are checked
 	{
+		cout << "\nÃœberspringe Nullen\n";
 		for (uint i = 0; i < numElements; i++)
 		{
-			cout << "\nÜberspringe Nullen\n";
 			if (!cells[i]->value)
 				continue;
 			vector<Cell*> hazardousNeighbors = cells[i]->GetHazards();
@@ -133,5 +133,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 	}
 	system("pause");
+
+	globalPIC->Dispose();
 	return 0;
 }

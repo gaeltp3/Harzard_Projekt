@@ -69,3 +69,10 @@ PrimImplikant* PrimImplikantCollection::operator[](uint &index){
 
 	return 0;
 }
+
+
+void PrimImplikantCollection::Dispose()
+{
+	for (uint i = 0; i < this->size(); i++)
+		delete this->at(i);
+}
