@@ -1,4 +1,4 @@
-//#include <iostream>
+#include <iostream>
 #include "stdafx.h"
 #include <string>
 #include <vector>
@@ -63,12 +63,12 @@ PrimImplikant* PrimImplikantCollection::at(unsigned int const &index)
 	return this->PIVector.at(index);
 }
 
-/*PrimImplikant* PrimImplikantCollection::operator[](unsigned int const &index){
-	if (index <= PIVector.size()){
+PrimImplikant* PrimImplikantCollection::operator[](unsigned int const &index){
+	if (index < PIVector.size()){
 
 		return this->PIVector.at(index);
 	}
 
 	cerr << "Fehler!!!!  PIVector.size()=" << PIVector.size() << endl;
 	return 0;
-}*/
+}

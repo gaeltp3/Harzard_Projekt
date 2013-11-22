@@ -9,12 +9,13 @@
 #include "PrimImplikant.h"
 #include "PrimImplikantCollection.h"
 #include "Cell.h"
+#include "Wertetabelle.h"
 
 using namespace std;
 
-unsigned int dimension = 0;			// = variables.size()
-unsigned int numElements = 0;		// = 2 ^ dimension
-bool KNF = false;
+extern unsigned int dimension = 0;			// = variables.size()
+extern unsigned int numElements = 0;		// = 2 ^ dimension
+extern bool KNF = false;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -43,7 +44,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		return -1;
 	}
 
-	PrimImplikantCollection* globalPIC = new PrimImplikantCollection();
+	PrimImplikantCollection* globalPIC = new PrimImplikantCollection();// Objektzeiger vom Typ PIC
 	vector<string>* variables = new vector<string>();
 
 	CParser parser;
@@ -55,6 +56,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		system("pause");
 		return 1;
 	}
+
+	Wertetabelle  objekt(globalPIC);
 	system("pause");
 	
 	/*pic.add(7);
@@ -80,7 +83,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			cout << endl;
 	}*/
 
-	
+	/*
 	// initialize Cells
 	vector<Cell*> cells;
 	cells.resize(numElements);
@@ -93,11 +96,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			numOnes++;
 	}
 
-
+	
 	// find hazards
 	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
 	{
-		for (unsigned int i = 0; i < numElements; i++)
+		for (unsigned int i = 0; i < numElements; i += 2)
 		{
 			cout << "\nSchachbrettmuster\n";
 			unsigned int grayI = i ^ (i/2);								// transform to gray code
@@ -118,7 +121,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		for (unsigned int i = 0; i < numElements; i++)
 		{
 			cout << "\nÜberspringe Nullen\n";
-			if (!cells[i]->value)
+			if (cells[i]->value == 0)
 				continue;
 			vector<Cell*> hazardousNeighbors = cells[i]->GetHazards();
 
@@ -131,7 +134,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				globalPIC->add(i, (*c)->index);						// add PI that solves hazard. Not quite smart...
 			}
 		}
-	}
-	system("pause");
+	} 
+	system("pause");*/
 	return 0;
 }

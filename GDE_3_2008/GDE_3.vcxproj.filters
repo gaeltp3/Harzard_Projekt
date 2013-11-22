@@ -51,12 +51,6 @@
     <ClCompile Include="Console\Console.cpp">
       <Filter>Console</Filter>
     </ClCompile>
-    <ClCompile Include="PrimImplikant.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Cparser.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -100,15 +94,6 @@
     </ClInclude>
     <ClInclude Include="Console\Console.h">
       <Filter>Console</Filter>
-    </ClInclude>
-    <ClInclude Include="PrimImplikantCollection.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="PrimImplikanten.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Cparser.h">
-      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

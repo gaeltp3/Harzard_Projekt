@@ -8,9 +8,9 @@ using namespace std;
 #define	Getc(s)			getc(s)
 #define	Ungetc(c)		{ungetc(c,IP_Input); ugetflag=1;}
 
-extern unsigned int dimension;
-extern unsigned int numElements;
-extern bool KNF;
+ unsigned int dimension;
+ unsigned int numElements;
+ bool KNF;
 
 // Adds a character to the string value
 void CParser::PushString(char c)
@@ -108,14 +108,14 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			}
 			break;
 		case P_TERMS_VALUE:
-			if (tok == INTEGER1)
+			if (tok == INTEGER1) // hier verstehe ich nicht was.
 			{
 				if (!KNFset)
 				{
 					KNF = (yylval.i == 0);
 					KNFset = true;
 				}
-				else if ((yylval.i == 0) ^ KNF)
+				else if ((yylval.i == 0) ^ KNF)// ^= EXOR Verpnü
 				{
 					fprintf(IP_Error, "*** FATAL ERROR *** You can only define either KNF or DNF!\n");
 					fprintf(IP_Error, "In line %3d: %s>%i\n", (int)IP_LineNumber, pic->back()->name.c_str(), yylval.i);

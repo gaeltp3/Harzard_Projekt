@@ -1,4 +1,4 @@
-//#include <iostream>
+#include <iostream>
 #include <string>
 #include <vector>
 #include "PrimImplikant.h"
@@ -24,6 +24,8 @@ public:
 	PrimImplikant* at(unsigned int const &index);
 	PrimImplikant* operator[](unsigned int const &index);
 	const PrimImplikant* operator[](unsigned int const &index) const;	
+
+	//friend int Wertetabelle::print(PrimImplikantCollection*&);
 	
 	~PrimImplikantCollection()	// destructor
 	{

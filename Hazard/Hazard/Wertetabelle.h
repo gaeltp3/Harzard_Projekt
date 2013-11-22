@@ -1,7 +1,6 @@
 #include <string>
 #include <vector>
 #include "PrimImplikantCollection.h"
-#include "Cparser.h"
 #include <iostream>
 
 using namespace std;

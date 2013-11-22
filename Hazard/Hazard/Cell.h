@@ -15,7 +15,7 @@ public:
 	vector<Cell*> GetNeighbors();			// returns numElements Cells
 	vector<Cell*> GetHazards();				// returns the neighbor Cells which are hazardous
 
-	Cell(unsigned int index, PrimImplikantCollection* &globalPIC)
+    Cell(unsigned int index, PrimImplikantCollection* &globalPIC)
 	{
 		this->index = index;
 		this->primImplikanten = globalPIC->primImplikantenAt(index);
