@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #pragma warning(disable:4786)
+#include <vector>
 #include <string>
 #include <map>
+#include "PrimImplikantCollection.h"
 #include "CParser.h"
 using namespace std;
 
