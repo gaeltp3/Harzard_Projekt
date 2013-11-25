@@ -88,59 +88,49 @@ int _tmain(int argc, _TCHAR* argv[])
 	for (uint i = 0; i < numElements; i++)
 	{
 		cells[i] = new Cell(i, globalPIC);
-		if (cells[i]->value)
-			numOnes++;
 	}
 
 	
 	Wertetabelle* wt = new Wertetabelle(&cells, variables);
 	wt->Print();
 	delete wt;
+	system("pause");
 
 
 	// find hazards
-	if (numOnes > numElements / 2)										// we have more 1 than 0 --> checkerboard --> 50% of cells are checked
+	for (uint i = 0; i < numElements; i += 2)
 	{
-		cout << "\nHazard-Algorithmus: Schachbrettmuster\n";
-		for (uint i = 0; i < numElements; i += 2)
+		uint grayI = i ^ (i/2);								// transform to gray code --> Schachbrettmuster
+		Cell* currentCell = cells[grayI];					// this is the cell we are currently checking
+
+		if (currentCell->value == false)					// no hazard can occur
+			continue;
+
+		cout << "   Checking cell " << grayI << endl;
+		vector<Cell*>* hazardousNeighbors = currentCell->getHazards(cells);
+
+		if (hazardousNeighbors->size() == 0)				// no hazard found
 		{
-			uint grayI = i ^ (i/2);								// transform to gray code
-			cout << "   Checking cell " << grayI << endl;
-			vector<Cell*> hazardousNeighbors = cells[grayI]->GetHazards();
-
-			if (hazardousNeighbors.size() == 0)							// we found no hazard
-				continue;
-
-			for (vector<Cell*>::iterator c = hazardousNeighbors.begin(); c < hazardousNeighbors.end(); c++)
-			{
-				printf("Hazard found! Cell %d <--> Cell %d\n", grayI, (*c)->index);
-				globalPIC->add(grayI, (*c)->index);						// add PI that solves hazard. Not quite smart...
-			}
+			delete hazardousNeighbors;
+			continue;
 		}
-	}
-	else																// less 1 than 0 --> only check every 1 --> less than 50% (numOnes/numElements) of cells are checked
-	{
-		cout << "\nHazard-Algorithmus: Ueberspringe Nullen\n";
-		for (uint i = 0; i < numElements; i++)
+
+		for (vector<Cell*>::iterator c = hazardousNeighbors->begin(); c < hazardousNeighbors->end(); c++)
 		{
-			if (!cells[i]->value)
-				continue;
-
-			cout << "   Checking cell " << i << endl;
-			vector<Cell*> hazardousNeighbors = cells[i]->GetHazards();
-
-			if (hazardousNeighbors.size() == 0)						// we found no hazard
-				continue;
-
-			for (vector<Cell*>::iterator c = hazardousNeighbors.begin(); c < hazardousNeighbors.end(); c++)
-			{
-				printf("Hazard found! Cell %d <--> Cell %d\n", i, (*c)->index);
-				globalPIC->add(i, (*c)->index);						// add PI that solves hazard. Not quite smart...
-			}
+			printf("Hazard found! Cell %d <--> Cell %d\n", grayI, (*c)->index);
+			globalPIC->add(grayI, (*c)->index);				// add PI that solves hazard. Not quite smart...
+			(*c)->refresh(globalPIC);						// refresh the local PIC (a PI was added)
 		}
+		currentCell->refresh(globalPIC);
+		delete hazardousNeighbors;
 	}
 	system("pause");
 
+	wt = new Wertetabelle(&cells, variables);
+	wt->Print();
+	delete wt;
+
 	globalPIC->Dispose();
+	system("pause");
 	return 0;
 }
