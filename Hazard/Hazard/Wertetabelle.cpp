@@ -11,6 +11,7 @@ using namespace std;
 
 extern uint dimension;
 extern uint numElements;
+extern bool KNF;
 
 void Wertetabelle::Print()
 {
@@ -18,29 +19,29 @@ void Wertetabelle::Print()
 
 	for (uint i = 0; i < numElements; i++)
 	{
-		cout << "| ";													//	=> |
-		cout << setfill(' ') << setw(ceil(log10((float)numElements))) << i;	//	=>    4
-		cout << " |";													//	=>      |
-		this->printI(i);												//	=>        0    1    0 0
-		cout << "| ";													//	=>                      |
-		cout << (*this->cells)[i]->value;								//	=>                        1
-		cout << " |";													//	=>                          |
-		this->printPrimImplikanten(i);									//	=>                            0 0x1 4
-		cout << endl;
+		cout << "| ";																//	=> |
+		cout << setfill(' ') << setw((uint)ceil(log10((float)numElements))) << i;	//	=>    4
+		cout << " |";																//	=>      |
+		this->printI(i);															//	=>        0  1  0 0
+		cout << "| ";																//	=>                   |
+		cout << ((*this->cells)[i]->value ^ KNF);									//	=>                     1
+		cout << " |";																//	=>                       |
+		this->printPrimImplikanten(i);												//	=>                         0 0x1 4
+		cout << endl;																// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
 
-		if (i > 0 && i % 15 == 0 && numElements - i > 5)
+		if (i > 0 && i % 15 == 0 && numElements - i > 5)		// reprint header so you dont have to scroll
 			//cout << this->makeHeader() << endl;
 			printHeader();
 	}
 
-	cout << string(this->width, '-');
+	cout << string(this->width, '-') << endl;
 }
 
 string Wertetabelle::makeHeader()
 {
 	bool setPad = padding.size() == 0;
 
-	string row2 = "|" + string(ceil(log10((float)numElements)) + 2, ' ') + "|";
+	string row2 = "|" + string((uint)ceil(log10((float)numElements)) + 2, ' ') + "|";
 	for (vector<string>::iterator v = variables->begin(); v < variables->end(); v++)
 	{
 		row2 += " " + *v;
