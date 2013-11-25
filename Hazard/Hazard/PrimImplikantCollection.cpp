@@ -13,17 +13,20 @@ void PrimImplikantCollection::add(PrimImplikant* &PI)
 void PrimImplikantCollection::add(string input)
 {
 	PrimImplikant* PI = new PrimImplikant(input);
-	PIVector.push_back(PI);
+	PI->id = this->size();
+	this->add(PI);
 }
 void PrimImplikantCollection::add(uint input)
 {
 	PrimImplikant* PI = new PrimImplikant(input);
-	PIVector.push_back(PI);
+	PI->id = this->size();
+	this->add(PI);
 }
 void PrimImplikantCollection::add(uint input1, uint input2)
 {
 	PrimImplikant* PI = new PrimImplikant(input1, input2);
-	PIVector.push_back(PI);
+	PI->id = this->size();
+	this->add(PI);
 }
 
 bool PrimImplikantCollection::valueAt(uint position)
@@ -41,6 +44,14 @@ PrimImplikantCollection PrimImplikantCollection::primImplikantenAt(uint position
 		if ((*i)->valueAt(position))
 			pic.add(*i);
 	return pic;
+}
+
+bool PrimImplikantCollection::contains(PrimImplikant* foreign)
+{
+	for (vector<PrimImplikant*>::iterator i = PIVector.begin(); i < PIVector.end(); i++)
+		if ((*i)->id == foreign->id)
+			return true;
+	return false;
 }
 
 uint PrimImplikantCollection::size()

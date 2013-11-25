@@ -10,6 +10,7 @@ class PrimImplikant
 {
 public:
 	string name;
+	uint id;
 
 	PrimImplikant(string input)
 	{

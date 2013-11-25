@@ -17,6 +17,7 @@ public:
 
 	bool valueAt(uint position);
 	PrimImplikantCollection primImplikantenAt(uint position);
+	bool contains(PrimImplikant* foreign);
 
 	void Dispose();
 
