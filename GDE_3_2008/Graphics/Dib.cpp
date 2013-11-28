@@ -67,7 +67,7 @@ void CDib::Load(CFile* pFile) throw(CImageException)
 	if(m_pBmpFileHeader->bfType != 0x4d42) {
 		Clear();
 		pFile->Close();
-		throw CImageException(_T("Failed to load document"));
+		throw CImageException("Failed to load document");
 	} else {
 		DWORD dwLength;
 		dwLength = m_pBmpFileHeader->bfOffBits - sizeof(BITMAPFILEHEADER);
@@ -98,7 +98,7 @@ void CDib::Create(CBitmap* pBitmap) throw(CImageException)
 	BITMAP Bitmap;
 	int rc = pBitmap->GetBitmap(&Bitmap);
 	if(rc == 0)
-		throw CImageException(_T("Can't get BITMAP from CBitmap*"));
+		throw CImageException("Can't get BITMAP from CBitmap*");
 
 	int iWidthBytes = ((Bitmap.bmWidth * Bitmap.bmBitsPixel + 15) & ~15) >> 3 ;
 	DWORD dwImgSize = iWidthBytes * Bitmap.bmHeight;
@@ -194,7 +194,7 @@ void CDib::Save(CString fileName) throw(CImageException)
 {
 	CFile file;
 	if(file.Open(fileName, CFile::modeWrite | CFile::modeCreate) == 0)
-		throw CImageException(_T("Cannot open a file"));
+		throw CImageException("Cannot open a file");
 	Save(&file);
 }
 
@@ -219,7 +219,7 @@ void CDib::Draw(CDC* pdc, int x, int y, double scale, DWORD dwROPCode) const thr
 	int nScanLines = ::StretchDIBits(pdc->GetSafeHdc(), x, y, (int)(GetWidth()*scale) , (int)(GetHeight()*scale), 0, 0, GetWidth(), GetHeight(), 
 									m_pDibBits, m_pBmpInfo, DIB_RGB_COLORS, dwROPCode);
 	if(nScanLines == GDI_ERROR)
-		throw CImageException(_T("CDib::Draw exception"));
+		throw CImageException("CDib::Draw exception");
 }
 
 void CDib::Draw(CDC* pdc, int x, int y, int width, int height, DWORD dwROPCode) const throw(CImageException) {
@@ -228,7 +228,7 @@ void CDib::Draw(CDC* pdc, int x, int y, int width, int height, DWORD dwROPCode) 
 	int nScanLines = ::StretchDIBits(pdc->GetSafeHdc(), x, y, width , height, 0, 0, GetWidth(), GetHeight(), 
 									m_pDibBits, m_pBmpInfo, DIB_RGB_COLORS, dwROPCode);
 	if(nScanLines == GDI_ERROR)
-		throw CImageException(_T("CDib::Draw exception"));
+		throw CImageException("CDib::Draw exception");
 }
 
 COLORREF CDib::GetPixel(int x, int y) const throw() {

@@ -1,24 +1,33 @@
-#ifndef PRIMIMPLIKANTCOLLEC
-#define PRIMIMPLIKANTCOLLEC
-
+//#include <iostream>
 #include <string>
 #include <vector>
-#include "PrimImplikanten.h"
+#include "PrimImplikant.h"
 
 using namespace std;
 
+#ifndef PRIMIMPLIKANTCOLLEC
+#define PRIMIMPLIKANTCOLLEC
+
 class PrimImplikantCollection{
 public:
-	void Add(PrimImplikant &pi);
-	//void Add(string input);
-	void Add(int input);
+	void add(PrimImplikant* &PI);
+	void add(string input);
+	void add(uint input);
+	void add(uint input1, uint input2);
 
-	bool ValueAt(int position);
+	bool valueAt(uint position);
+	PrimImplikantCollection primImplikantenAt(uint position);
+	bool contains(PrimImplikant* foreign);
 
-	PrimImplikant SolveNextHazard();
-	
+	void Dispose();
+
+	uint size();
+	PrimImplikant* back();
+	PrimImplikant* front();
+	PrimImplikant* at(uint &index);
+	PrimImplikant* operator[](uint &index);
 private:
-	vector<PrimImplikant> PIVector;
-}
+	vector<PrimImplikant*> PIVector;
+};
 
 #endif

@@ -32,7 +32,7 @@ public:
 	*	@param		None
 	*	@exceptions	None
 	*/
-	CImageException() throw() : BaseException(_T("ImageException")) {}
+	CImageException() throw() : BaseException("ImageException") {}
 	/** Constructor with string description
 	*	@param		message - This should be a useful message for error tracking.
 	*	@exceptions	None

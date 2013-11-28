@@ -51,10 +51,19 @@
     <ClCompile Include="Console\Console.cpp">
       <Filter>Console</Filter>
     </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CParser.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
     <ClCompile Include="PrimImplikant.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Cparser.cpp">
+    <ClCompile Include="PrimImplikantCollection.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Wertetabelle.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,13 +110,22 @@
     <ClInclude Include="Console\Console.h">
       <Filter>Console</Filter>
     </ClInclude>
-    <ClInclude Include="PrimImplikantCollection.h">
+    <ClInclude Include="Graphics\stdafx.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="PrimImplikanten.h">
+    <ClInclude Include="Cell.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Cparser.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimImplikant.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimImplikantCollection.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Wertetabelle.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
