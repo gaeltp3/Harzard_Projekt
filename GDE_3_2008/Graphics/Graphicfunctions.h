@@ -21,6 +21,7 @@ void get_drawarea(int *b, int *h);				// Ermitteln der Groesse des Zeichenberech
 #define YELLOW	RGB(255,255,0)
 #define GREY	RGB(192,192,192)
 #define BROWN	RGB(128,64,0)
+#define TRANSPARENT -1
 
 
 // Bildpunkte und Bildschirmbereiche

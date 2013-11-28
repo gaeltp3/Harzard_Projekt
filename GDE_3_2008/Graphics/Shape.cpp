@@ -229,8 +229,11 @@ void CTextBox::Draw(CDC* pDC)
 	pDC->SetBkMode(TRANSPARENT);		// Festlegen auf durchsichtig.
 
 	// Zeichnen eines fuellenden Rechteckes.
-	CRectangle rectangle(m_rect, m_crFrame, m_crFill);
-	rectangle.Draw(pDC);
+	if (m_crFrame != (COLORREF)-1)
+	{
+		CRectangle rectangle(m_rect, m_crFrame, m_crFill);
+		rectangle.Draw(pDC);
+	}
 
 	m_rect.DeflateRect(1, 1, 1, 1);		// Verkleinern des virtuellen Rechteckes
 										// um die Linienbreite des Rahmens.
