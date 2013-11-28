@@ -1,0 +1,7 @@
+Variables: a, bar, char, d
+Terms:
+"0010">1
+7>1
+14>1
+"01xx">1
+"x000">1

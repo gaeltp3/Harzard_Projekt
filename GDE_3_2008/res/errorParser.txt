@@ -1,0 +1,12 @@
+*** FATAL ERROR *** You can only define either KNF or DNF!
+In line 8211212: (null)>-1105314512
+In line   4: Defined was: DNF, but now shall be changed to KNF
+
+*** FATAL ERROR *** You can only define either KNF or DNF!
+In line   4: 7>0
+In line   4: Defined was: DNF, but now shall be changed to KNF
+
+*** FATAL ERROR *** You can only define either KNF or DNF!
+In line   4: 7>1
+In line   4: Defined was: KNF, but now shall be changed to DNF
+

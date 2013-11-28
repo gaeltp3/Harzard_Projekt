@@ -118,7 +118,7 @@ void Restart()
 }
 
 
-void user_main()
+void user_main2()
 {
 	int ww,hh;
 	set_windowpos(0,0,600,400);

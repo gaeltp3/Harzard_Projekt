@@ -17,31 +17,31 @@ uint dimension = 0;			// = variables.size()
 uint numElements = 0;		// = 2 ^ dimension
 bool KNF = false;
 
-int _tmain(int argc, _TCHAR* argv[])
+void user_main(void)
 {
 	FILE * input;
 	FILE * error;
 	FILE * list;
-	fopen_s(&input, "..\\res\\input.txt", "r");
+	fopen_s(&input, "res\\input.txt", "r");
 	if (input == 0)
 	{
 		cout << "Fehler Inputdatei";
 		system("pause");
-		return -1;
+		return;
 	}
-	fopen_s(&error, "..\\res\\errorParser.txt", "a");
+	fopen_s(&error, "res\\errorParser.txt", "a");
 	if (error == 0)
 	{
 		cout << "Fehler Fehlerdatei";
 		system("pause");
-		return -1;
+		return;
 	}
-	fopen_s(&list, "..\\res\\listParser.txt", "w");
+	fopen_s(&list, "res\\listParser.txt", "w");
 	if (list == 0)
 	{
 		cout << "Fehler Listdatei";
 		system("pause");
-		return -1;
+		return;
 	}
 
 	PrimImplikantCollection* globalPIC = new PrimImplikantCollection();
@@ -53,7 +53,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (parser.yyparse(globalPIC, variables) != 0)
 	{
 		system("pause");
-		return 1;
+		return;
 	}
 	system("pause");
 	
@@ -132,5 +132,5 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	globalPIC->Dispose();
 	system("pause");
-	return 0;
+	return;
 }
