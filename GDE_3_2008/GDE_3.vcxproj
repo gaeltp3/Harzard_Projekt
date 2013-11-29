@@ -114,6 +114,7 @@
     <ClCompile Include="..\Hazard\Hazard\Cell.cpp" />
     <ClCompile Include="..\Hazard\Hazard\CParser.cpp" />
     <ClCompile Include="..\Hazard\Hazard\Hazard.cpp" />
+    <ClCompile Include="..\Hazard\Hazard\KV.cpp" />
     <ClCompile Include="..\Hazard\Hazard\PrimImplikant.cpp" />
     <ClCompile Include="..\Hazard\Hazard\PrimImplikantCollection.cpp" />
     <ClCompile Include="..\Hazard\Hazard\Wertetabelle.cpp" />
@@ -130,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="..\Hazard\Hazard\Cell.h" />
     <ClInclude Include="..\Hazard\Hazard\CParser.h" />
+    <ClInclude Include="..\Hazard\Hazard\KV.h" />
     <ClInclude Include="..\Hazard\Hazard\PrimImplikant.h" />
     <ClInclude Include="..\Hazard\Hazard\PrimImplikantCollection.h" />
     <ClInclude Include="..\Hazard\Hazard\Wertetabelle.h" />
@@ -152,6 +154,7 @@
     <None Include="res\GDE_3.ico" />
     <None Include="res\GDE_3.rc2" />
     <None Include="res\GDE_3Doc.ico" />
+    <None Include="res\input.txt" />
     <None Include="res\Toolbar.bmp" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
