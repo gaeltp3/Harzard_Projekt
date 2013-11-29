@@ -10,6 +10,7 @@
 #include "PrimImplikantCollection.h"
 #include "Cell.h"
 #include "Wertetabelle.h"
+#include "KV.h"
 
 using namespace std;
 
@@ -55,7 +56,10 @@ void user_main(void)
 		system("pause");
 		return;
 	}
-	system("pause");
+	fclose(input);
+	fclose(error);
+	fclose(list);
+	//system("pause");
 	
 	/*pic.add(7);
 	pic.add("0x1");
@@ -94,7 +98,10 @@ void user_main(void)
 	Wertetabelle* wt = new Wertetabelle(&cells, variables);
 	wt->Print();
 	delete wt;
-	system("pause");
+
+	KV* kv = new KV(globalPIC, cells, 30);
+	kv->Print(30);
+	//system("pause");
 
 
 	// find hazards
@@ -124,13 +131,16 @@ void user_main(void)
 		currentCell->refresh(globalPIC);
 		delete hazardousNeighbors;
 	}
-	system("pause");
+	//system("pause");
 
 	wt = new Wertetabelle(&cells, variables);
 	wt->Print();
 	delete wt;
 
+	kv->Print(30*2 + kv->width(), 30);
+	delete kv;
+
 	globalPIC->Dispose();
-	system("pause");
+	//system("pause");
 	return;
 }
