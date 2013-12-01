@@ -69,6 +69,12 @@
     <ClCompile Include="..\Hazard\Hazard\KV.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\Hazard\Hazard\CellCollection.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Hazard\Hazard\stdafx.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -129,6 +135,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="..\Hazard\Hazard\KV.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Hazard\Hazard\CellCollection.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
