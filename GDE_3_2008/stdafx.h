@@ -4,6 +4,8 @@
 
 #pragma once
 
+#define STDAFX
+
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN		// Selten verwendete Teile der Windows-Header nicht einbinden
 #endif
@@ -43,6 +45,8 @@
 #include <stdarg.h>
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// MFC-Unterstützung für allgemeine Windows-Steuerelemente
+#include <vector>
+#include <string>
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 typedef unsigned int uint;
