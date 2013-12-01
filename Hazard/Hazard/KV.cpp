@@ -124,6 +124,33 @@ void KV::PrintPrimImplikanten()
 {
 	for (uint i = 0; i < this->globalPic->size(); i++)
 	{
+		PrimImplikant* currentPI = this->globalPic[i];
+
+		uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;								// find coordinates for Rechteck
+		for (uint j = 0; j < currentPI->implikanten.size(); j++)
+		{
+			uint currentI = currentPI->implikanten[j];
+			currentI ^= currentI / 2;										// convert to gray
+			uint w = (currentI & ((0x1 << (this->numVarX + 1)) - 1));		// get all bits that make X (=w)
+			uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
+
+			uint x1 = (w + 1) * (this->edgeLength + 1);						// Upper coord
+			uint x2 = x1 + this->edgeLength;								// Lower coord
+			uint y1 = (h + 1) * (this->edgeLength + 1);						// Left  coord
+			uint y2 = y1 + this->edgeLength;								// Right coord
+
+			X1 = min(X1, x1);
+			X2 = max(X2, x2);
+			Y1 = min(Y1, y1);
+			Y2 = max(Y2, y2);
+		}
+
+		if (currentPI->implikanten.size() == 1)
+			this->Rechteck(X1+2, Y1+2, X2-2, Y2-2, GREEN, TRANSPARENT);
+		else if (currentPI->name.strpos("|") !== -1)
+			this->Rechteck(X1+2, Y1+2, X2-2, Y2-2, BLUE, TRANSPARENT);
+		else
+			this->Rechteck(X1, Y1, X2, Y2, RED, TRANSPARENT);
 	}
 }
 
@@ -150,6 +177,11 @@ void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, i
 {
 	textbox(x1 + this->offsetX + 1, y1 + this->offsetY, x2 + this->offsetX + 1, y2 + this->offsetY, size, ctext, cframe, cfill, flags, theText);
 	textbox(x1 + this->offsetX + 2, y1 + this->offsetY, x2 + this->offsetX + 2, y2 + this->offsetY, size, ctext, TRANSPARENT, TRANSPARENT, flags, theText);		// write twice to simulate bold font
+}
+
+void KV::Rechteck(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill)
+{
+	rechteck(x1 + this->offsetX, y1 + this->offsetY, x2 + this->offsetX, y2 + this->offsetY, cframe, cfill);
 }
 
 
