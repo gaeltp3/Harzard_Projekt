@@ -39,6 +39,9 @@
     <ClInclude Include="Wertetabelle.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="CellCollection.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -60,6 +63,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Cell.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CellCollection.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

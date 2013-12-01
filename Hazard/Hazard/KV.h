@@ -3,6 +3,7 @@
 #include <string>
 #include <WinGDI.h>
 #include "Cell.h"
+#include "CellCollection.h"
 #include "PrimImplikantCollection.h"
 
 extern uint dimension;
@@ -18,7 +19,7 @@ public:
 	uint height();										// Gibt die Höhe   eines KV-Diagramms zurück (heightPx)
 
 	// Konstruktor
-	KV(PrimImplikantCollection * globalPic, vector<Cell*> allCells, uint size) 
+	KV(PrimImplikantCollection * globalPic, CellCollection allCells, uint size) 
 	  :	edgeLength(size),
 		numVarX(((uint)floor(dimension/2.0f))), numVarY(((uint)ceil(dimension/2.0f))),
 		numFieldX((uint)pow(2,(float)numVarX)), numFieldY((uint)pow(2,(float)numVarY)),
@@ -31,7 +32,7 @@ public:
 
 private:
 	PrimImplikantCollection* globalPic;
-	vector<Cell*> allCells;
+	CellCollection allCells;
 
 	uint offsetX;						// Der freie Platz nach links in Pixeln
 	uint offsetY;						// Der freie Platz nach rechts in Pixeln
@@ -53,7 +54,8 @@ private:
 	void Line(uint x1, uint y1, uint x2, uint y2, int color);																			// Zeichnet eine Linie mit Offset
 	void Text(uint x, uint y, uint size, int color, int bkcolor, int angle, int align, char* theText);									// Zeichnet einen Text mit Offset
 	void KV::TextBox(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);		// Zeichnet eine TextBox mit Offset
-	void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);	// Zeichnet eine TextBox mit Offset und fetter Schrift
+	void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);		// Zeichnet eine TextBox mit Offset und fetter Schrift
+	void KV::Rechteck(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill);		// Zeichnet ein Rechteck mit Offset und fetter Schrift
 
 	char* Binary(uint x, char length);	// Wie itoa(x, char[], 2), allerdings mit fester Breite
 };
