@@ -3,10 +3,10 @@
 
 #include "stdafx.h"
 #pragma warning(disable:4786)
+#include <vector>
 #include <string>
 #include <map>
 #include "PrimImplikantCollection.h"
-
 using namespace std;
 
 #define	Getc(s)			getc(s)
@@ -45,14 +45,19 @@ public:
 	map<int,string> IP_revToken_table;			//reverse Tokendefinitions
 
 
-	int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>*	 &variables);	//parser
 	int CParser::yylex();						//lexial analyser
 	void CParser::yyerror(char *ers);			//error reporter
 	int CParser::IP_MatchToken(string &tok);	//checks the token
 	void CParser::InitParse(FILE *inp,FILE *err,FILE *lst);
+	int	CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables);						//parser
 	void CParser::pr_tokentable();				//test output for tokens
 	void CParser::IP_init_token_table();		//loads the tokens
 	void CParser::Load_tokenentry(string str,int index);//load one token
 	void CParser::PushString(char c);			//Used for dtring assembly
 	CParser(){IP_LineNumber = 1;ugetflag=0;prflag=0;};	//Constructor
+	CParser(FILE * input, FILE * error, FILE * list)
+	{
+		parser->IP_init_token_table();
+		this->InitParse(input, error, list);
+	}
 };
