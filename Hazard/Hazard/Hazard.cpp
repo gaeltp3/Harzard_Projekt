@@ -16,6 +16,37 @@ uint dimension = 0;			// = variables.size()
 uint numElements = 0;		// = 2 ^ dimension
 bool KNF = false;
 
+
+int open_files(FILE * &input, FILE * &error, FILE * &list)
+{
+	fopen_s(&input, "res\\input.txt", "r");
+	if (input == 0)
+	{
+		cout << "Fehler Inputdatei";
+		return 1;
+	}
+	fopen_s(&error, "res\\errorParser.txt", "a");
+	if (error == 0)
+	{
+		cout << "Fehler Fehlerdatei";
+		return 1;
+	}
+	fopen_s(&list, "res\\listParser.txt", "w");
+	if (list == 0)
+	{
+		cout << "Fehler Listdatei";
+		return 1;
+	}
+	return 0;
+}
+
+void pause()
+{
+#ifdef DEBUG
+	system("pause");
+#endif
+}
+
 void user_main(void)
 {
 	FILE * input;
@@ -76,34 +107,4 @@ void user_main(void)
 	
 	pause();
 	return;
-}
-
-
-int open_files(FILE * &input, FILE * &error, FILE * &list)
-{
-	fopen_s(&input, "res\\input.txt", "r");
-	if (input == 0)
-	{
-		cout << "Fehler Inputdatei";
-		return 1;
-	}
-	fopen_s(&error, "res\\errorParser.txt", "a");
-	if (error == 0)
-	{
-		cout << "Fehler Fehlerdatei";
-		return 1;
-	}
-	fopen_s(&list, "res\\listParser.txt", "w");
-	if (list == 0)
-	{
-		cout << "Fehler Listdatei";
-		return 1;
-	}
-}
-
-void pause()
-{
-#if DEBUG
-	system("pause");
-#endif
 }
