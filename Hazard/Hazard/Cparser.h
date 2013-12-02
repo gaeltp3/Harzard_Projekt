@@ -57,7 +57,7 @@ public:
 	CParser(){IP_LineNumber = 1;ugetflag=0;prflag=0;};	//Constructor
 	CParser(FILE * input, FILE * error, FILE * list)
 	{
-		parser->IP_init_token_table();
+		this->IP_init_token_table();
 		this->InitParse(input, error, list);
 	}
 };
