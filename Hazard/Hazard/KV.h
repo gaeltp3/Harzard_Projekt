@@ -19,7 +19,7 @@ public:
 	uint height();										// Gibt die Höhe   eines KV-Diagramms zurück (heightPx)
 
 	// Konstruktor
-	KV(PrimImplikantCollection * globalPic, CellCollection allCells, uint size) 
+	KV(PrimImplikantCollection* globalPic, CellCollection* allCells, uint size) 
 	  :	edgeLength(size),
 		numVarX(((uint)floor(dimension/2.0f))), numVarY(((uint)ceil(dimension/2.0f))),
 		numFieldX((uint)pow(2,(float)numVarX)), numFieldY((uint)pow(2,(float)numVarY)),
@@ -32,7 +32,7 @@ public:
 
 private:
 	PrimImplikantCollection* globalPic;
-	CellCollection allCells;
+	CellCollection* allCells;
 
 	uint offsetX;						// Der freie Platz nach links in Pixeln
 	uint offsetY;						// Der freie Platz nach rechts in Pixeln

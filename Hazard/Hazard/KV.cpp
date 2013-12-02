@@ -73,7 +73,7 @@ void KV::PrintVariables()	// Erstellt die Werte der Variablen in der ersten X- u
 		uint XL = (w + 1) * (this->edgeLength + 1);
 		uint XR = XL + this->edgeLength;
 		char* value = this->Binary(w^(w/2), this->numVarX);		// in Gray und String umwandeln
-		this->TextBoxBold(XL, 0, XR, this->edgeLength, 10, BLACK, TRANSPARENT, TRANSPARENT, CENTER, value);
+		this->TextBoxBold(XL, 0, XR, this->edgeLength, 10, BLACK, TRANS, TRANS, CENTER, value);
 		delete value;
 	}
 
@@ -83,7 +83,7 @@ void KV::PrintVariables()	// Erstellt die Werte der Variablen in der ersten X- u
 		uint YT = (h + 1) * (this->edgeLength + 1);
 		uint YB = YT + this->edgeLength;
 		char* value = this->Binary(h^(h/2), this->numVarY);		// in Gray und String umwandeln
-		this->TextBoxBold(0, YT, this->edgeLength, YB, 10, BLACK, TRANSPARENT, TRANSPARENT, CENTER, value);
+		this->TextBoxBold(0, YT, this->edgeLength, YB, 10, BLACK, TRANS, TRANS, CENTER, value);
 		delete value;
 	}
 }
@@ -113,8 +113,8 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 
 			// Dies sind die Zellwerte:
 			char* I = new char[2];
-			itoa(this->allCells[i]->value, I, 10);
-			this->TextBox(XL, YT, XR, YB, 10, BLACK, TRANSPARENT, TRANSPARENT, CENTER, I);
+			_itoa_s(this->allCells->at(i)->value, I, 2, 10);
+			this->TextBox(XL, YT, XR, YB, 10, BLACK, TRANS, TRANS, CENTER, I);
 			delete I;
 		}
 	}
@@ -122,17 +122,19 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 
 void KV::PrintPrimImplikanten()
 {
+	srand(time(NULL));
 	for (uint i = 0; i < this->globalPic->size(); i++)
 	{
-		PrimImplikant* currentPI = this->globalPic[i];
+		PrimImplikant* currentPI = this->globalPic->at(i);
 
 		uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;								// find coordinates for Rechteck
 		for (uint j = 0; j < currentPI->implikanten.size(); j++)
 		{
 			uint currentI = currentPI->implikanten[j];
-			currentI ^= currentI / 2;										// convert to gray
-			uint w = (currentI & ((0x1 << (this->numVarX + 1)) - 1));		// get all bits that make X (=w)
+			uint w = (currentI & ((0x1 << (this->numVarX)) - 1));			// get all bits that make X (=w)
+			w ^= w/2;
 			uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
+			h ^= h/2;
 
 			uint x1 = (w + 1) * (this->edgeLength + 1);						// Upper coord
 			uint x2 = x1 + this->edgeLength;								// Lower coord
@@ -145,12 +147,22 @@ void KV::PrintPrimImplikanten()
 			Y2 = max(Y2, y2);
 		}
 
-		if (currentPI->implikanten.size() == 1)
-			this->Rechteck(X1+2, Y1+2, X2-2, Y2-2, GREEN, TRANSPARENT);
-		else if (currentPI->name.strpos("|") !== -1)
-			this->Rechteck(X1+2, Y1+2, X2-2, Y2-2, BLUE, TRANSPARENT);
+		if (currentPI->name.find("|") != string::npos)
+		{
+			this->Rechteck(X1+12, Y1+9, X2-12, Y2-9, RED, TRANS);
+		}
 		else
-			this->Rechteck(X1, Y1, X2, Y2, RED, TRANSPARENT);
+		{
+			uint random = rand() % 10;
+			X1 += random;
+			X2 -= random;
+			Y1 += random;
+			Y2 -= random;
+			if (currentPI->implikanten.size() == 1)
+				this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
+			else
+				this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
+		}
 	}
 }
 
@@ -176,12 +188,12 @@ void KV::TextBox(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int c
 void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText)
 {
 	textbox(x1 + this->offsetX + 1, y1 + this->offsetY, x2 + this->offsetX + 1, y2 + this->offsetY, size, ctext, cframe, cfill, flags, theText);
-	textbox(x1 + this->offsetX + 2, y1 + this->offsetY, x2 + this->offsetX + 2, y2 + this->offsetY, size, ctext, TRANSPARENT, TRANSPARENT, flags, theText);		// write twice to simulate bold font
+	textbox(x1 + this->offsetX + 2, y1 + this->offsetY, x2 + this->offsetX + 2, y2 + this->offsetY, size, ctext, TRANS, TRANSPARENT, flags, theText);		// write twice to simulate bold font
 }
 
 void KV::Rechteck(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill)
 {
-	rechteck(x1 + this->offsetX, y1 + this->offsetY, x2 + this->offsetX, y2 + this->offsetY, cframe, cfill);
+	rectangle(x1 + this->offsetX + 1, y1 + this->offsetY + 1, x2 + this->offsetX + 1, y2 + this->offsetY + 1, cframe, cfill);
 }
 
 
