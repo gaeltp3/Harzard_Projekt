@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include <vector>
 #include <string>
-#include <WinGDI.h>
 #include "Cell.h"
 #include "CellCollection.h"
 #include "PrimImplikantCollection.h"
@@ -9,6 +8,10 @@
 extern uint dimension;
 extern uint numElements;
 extern bool KNF;
+
+
+#ifndef _KV_H
+#define _KV_H
 
 class KV
 {
@@ -61,7 +64,5 @@ private:
 };
 
 
-#ifndef _KV_H
-#define _KV_H
 #define CENTER SINGLE_LINE|CENTER_ALIGN|VCENTER_ALIGN
 #endif

@@ -63,9 +63,6 @@
     <ClCompile Include="..\Hazard\Hazard\Hazard.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\Hazard\Hazard\KV.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\Hazard\Hazard\PrimImplikant.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\Hazard\Hazard\Wertetabelle.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Hazard\Hazard\KV.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +128,6 @@
     <ClInclude Include="..\Hazard\Hazard\Cparser.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\Hazard\Hazard\KV.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="..\Hazard\Hazard\PrimImplikant.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -138,6 +135,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="..\Hazard\Hazard\Wertetabelle.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Hazard\Hazard\KV.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
