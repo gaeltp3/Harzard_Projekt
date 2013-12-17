@@ -83,7 +83,7 @@ void user_main(void)
 	Wertetabelle* wt = new Wertetabelle(allCells, variables);
 	wt->Print();
 
-	KV* kv = new KV(globalPIC, allCells, 30);
+	KV* kv = new KV(globalPIC, allCells, 30,variables);
 	kv->Print(30);
 	//system("pause");
 
@@ -92,7 +92,7 @@ void user_main(void)
 	allCells->findHazards();
 	//system("pause");
 
-
+	
 	// print Wertetabelle and KV of corrected data
 	wt->Print();
 	delete wt;
@@ -104,6 +104,7 @@ void user_main(void)
 	allCells->Dispose();
 	delete globalPIC;
 	delete allCells;
+	//delete [] variables;   @ Johnny: Warum soll ich diese Auskommentierung nicht aktieren??
 	
 	pause();
 	return;
