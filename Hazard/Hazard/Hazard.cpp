@@ -104,8 +104,6 @@ void user_main(void)
 	allCells->Dispose();
 	delete globalPIC;
 	delete allCells;
-	//delete [] variables;   @ Johnny: Warum soll ich diese Auskommentierung nicht aktieren??
-	
-	pause();
+	delete variables;
 	return;
 }
