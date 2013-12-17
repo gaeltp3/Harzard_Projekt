@@ -22,11 +22,11 @@
 #endif						
 
 #ifndef _WIN32_WINDOWS		// Lassen Sie die Verwendung von Features spezifisch für Windows 98 oder später zu.
-#define _WIN32_WINDOWS 0x0410 // Ändern Sie den entsprechenden Wert, um auf mindestens Windows Me abzuzielen.
+#define _WIN32_WINDOWS 0x0501 // Ändern Sie den entsprechenden Wert, um auf mindestens Windows Me abzuzielen.
 #endif
 
 #ifndef _WIN32_IE			// Lassen Sie die Verwendung von Features spezifisch für IE 4.0 oder später zu.
-#define _WIN32_IE 0x0400	// Ändern Sie den entsprechenden Wert, um auf mindestens IE 5.0 abzuzielen.
+#define _WIN32_IE 0x0501	// Ändern Sie den entsprechenden Wert, um auf mindestens IE 5.0 abzuzielen.
 #endif
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// einige CString-Konstruktoren sind explizit
