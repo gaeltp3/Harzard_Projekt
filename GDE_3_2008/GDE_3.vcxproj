@@ -140,6 +140,7 @@
     <ClInclude Include="..\Hazard\Hazard\Cell.h" />
     <ClInclude Include="..\Hazard\Hazard\CellCollection.h" />
     <ClInclude Include="..\Hazard\Hazard\Cparser.h" />
+    <ClInclude Include="..\Hazard\Hazard\Implikant_localisation.h" />
     <ClInclude Include="..\Hazard\Hazard\KV.h" />
     <ClInclude Include="..\Hazard\Hazard\PrimImplikant.h" />
     <ClInclude Include="..\Hazard\Hazard\PrimImplikantCollection.h" />

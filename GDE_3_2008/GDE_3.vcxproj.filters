@@ -140,6 +140,9 @@
     <ClInclude Include="..\Hazard\Hazard\KV.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="..\Hazard\Hazard\Implikant_localisation.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\GDE_3.ico">

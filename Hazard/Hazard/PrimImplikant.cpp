@@ -2,8 +2,15 @@
 #include <string>
 #include <vector>
 #include "PrimImplikant.h"
+#include "Implikant_localisation.h"
 
 using namespace std;
+
+void PrimImplikant::add(Implikant_localisation* &I){
+
+	I_Vector.push_back(I);
+}
+
 
 bool PrimImplikant::valueAt(uint pos) {
 	for (vector<uint>::iterator i = implikanten.begin(); i < implikanten.end(); ++i)
@@ -38,5 +45,9 @@ void PrimImplikant::parser(string input) {  // Analyser
 		implikant <<= 1;	// *2
 		implikant += (uint)c - (uint)'0';
 	}
+
+	Implikant_localisation* I = new Implikant_localisation(implikant);
+	this->add(I);
+
 	implikanten.push_back(implikant);
 }
