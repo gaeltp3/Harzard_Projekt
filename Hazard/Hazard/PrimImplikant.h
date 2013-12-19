@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Implikant_localisation.h"
 
 using namespace std;
 

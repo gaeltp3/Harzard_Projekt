@@ -240,7 +240,122 @@ void KV::PrintPrimImplikanten()
 	}
 }
 
+//------------------------------------------------------------------
 
+bool KV:: Anwesenheit(Implikant_localisation* &I, vector<Implikant_localisation*> &group)
+{
+
+	for (vector<Implikant_localisation*>::iterator it = group.begin(); it < group.end(); it++)
+	{
+		if ((*it)->i == (I->i))
+		{
+			return true;
+		}
+
+	}
+	return false;
+}
+
+vector<Implikant_localisation*> KV::setgroupCollection(vector<Implikant_localisation*> &group)
+{
+	
+	vector<Implikant_localisation*> hilfVec1;
+	vector<Implikant_localisation*>::iterator it1, it2;
+	int schalter = 1;
+
+	//  Muss noch eine Überprufung der mitteLinie w der KV diagramm gemacht werden 
+
+	for (it1 = group.begin(); it1 < group.end() - 1; it1++) 
+	{
+		if (schalter)
+		{
+
+			hilfVec1.push_back(*it1);
+			schalter = 0;
+		}
+
+		for (it2 = it1 + 1; it2 < group.end(); it2++)
+		{
+
+			if ((((*it1)->w) == ((*it2)->w) && abs((int)((*it1)->h - (*it2)->h)) == 1) || ((*it1)->h) == ((*it2)->h) && abs((int)((*it1)->w - (*it2)->w)) == 1)
+			{
+
+				if (Anwesenheit((*it2), hilfVec1) == 0){
+
+					hilfVec1.push_back(*it2);
+					break;
+				}
+
+				break;
+			}
+			else
+			{
+				// Muss hier weiter programmiert.    
+			}
+
+		}
+
+		this->PI_groupCollection.push_back(&hilfVec1);
+	}
+}
+
+
+void KV::PrintPrimImplikanten()
+{
+
+	srand(time(NULL) + rand());
+
+	for (uint i = 0; i < this->globalPic->size(); i++)
+	{
+		PrimImplikant* currentPI = this->globalPic->at(i);
+		vector<Implikant_localisation*>::iterator it1;
+		vector<Implikant_localisation*> groupA;            // Jede I_vector wird in einem oder in Zwei vectoren
+		vector<Implikant_localisation*> groupB;            //  zuerst gespaltet.
+		int Linie_mitte = 0;
+
+		for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end() - 1; it1++)
+		{
+			if ((((*it1)->h) = (this->numVarY / 2) - 1) || (((*it1)->h) = (this->numVarY / 2)))
+			{
+				Linie_mitte++;      // test zu wissen ob die MitteLinie h  der KV diagramm erreicht ist.
+			}
+		}
+		for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end() - 1; it1++)
+		{
+
+			if (((*it1)->h < (this->numVarY / 2) - 1))  // die Implikanten, deren h <= numVary/2 -1 sind im groupA
+			{                                          // gespeichert.
+
+				groupA.push_back(*it1);
+
+
+			}
+			else if (Linie_mitte)
+			{
+				groupA.push_back(*it1);
+
+			}
+			else { groupB.push_back(*it1); }
+
+		}
+
+		if (groupA.size() != 0)
+		{
+			setgroupCollection(groupA);
+		}
+		if (groupB.size() != 0)
+		{
+			setgroupCollection(groupB);
+		}
+
+	}
+}
+
+		
+
+
+
+			
 void KV::Line(uint x1, uint y1, uint x2, uint y2, int color)
 {
 	line(x1 + this->offsetX, y1 + this->offsetY, x2 + this->offsetX, y2 + this->offsetY, color);
