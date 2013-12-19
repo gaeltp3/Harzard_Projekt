@@ -24,6 +24,7 @@ public:
 		name = nameC;
 
 		implikanten.push_back(input);
+		I_Vector.push_back(new Implikant_localisation(input));
 	}
 	PrimImplikant(uint input1, uint input2)
 	{
@@ -35,12 +36,13 @@ public:
 		name.append(nameC);
 
 		implikanten.push_back(input1);
+		I_Vector.push_back(new Implikant_localisation(input1));
 		implikanten.push_back(input2);
+		I_Vector.push_back(new Implikant_localisation(input2));
 	}
 
 	bool PrimImplikant::valueAt(uint position);
 	void PrimImplikant::parser(string input);
-	void add(Implikant_localisation* &I);
 
 	vector<uint> implikanten;
 	vector<Implikant_localisation*> I_Vector;

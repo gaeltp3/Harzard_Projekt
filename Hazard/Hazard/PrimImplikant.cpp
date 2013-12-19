@@ -6,12 +6,6 @@
 
 using namespace std;
 
-void PrimImplikant::add(Implikant_localisation* &I){
-
-	I_Vector.push_back(I);
-}
-
-
 bool PrimImplikant::valueAt(uint pos) {
 	for (vector<uint>::iterator i = implikanten.begin(); i < implikanten.end(); ++i)
 		if (*i == pos)
@@ -46,8 +40,6 @@ void PrimImplikant::parser(string input) {  // Analyser
 		implikant += (uint)c - (uint)'0';
 	}
 
-	Implikant_localisation* I = new Implikant_localisation(implikant);
-	this->add(I);
-
 	implikanten.push_back(implikant);
+	I_Vector.push_back(new Implikant_localisation(implikant));
 }
