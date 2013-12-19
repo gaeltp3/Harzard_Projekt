@@ -13,6 +13,7 @@ void PrimImplikantCollection::add(PrimImplikant* &PI)
 void PrimImplikantCollection::add(string input)
 {
 	PrimImplikant* PI = new PrimImplikant(input);
+
 	PI->id = this->size();
 	this->add(PI);
 }

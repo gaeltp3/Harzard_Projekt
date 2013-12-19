@@ -40,7 +40,9 @@ public:
 
 	bool PrimImplikant::valueAt(uint position);
 	void PrimImplikant::parser(string input);
+	void add(Implikant_localisation* &I);
 
 	vector<uint> implikanten;
+	vector<Implikant_localisation*> I_Vector;
 };
 #endif
