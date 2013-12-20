@@ -45,7 +45,10 @@ public:
 	bool PrimImplikant::valueAt(uint position);
 	void PrimImplikant::parser(string input);
 
+	
+
 	vector<uint> implikanten;
 	vector<Implikant_localisation*> I_Vector;
+	vector<vector<Implikant_localisation*>*> PI_groupCollection;
 };
 #endif
