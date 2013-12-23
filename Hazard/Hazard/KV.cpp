@@ -9,6 +9,8 @@ extern uint dimension;
 extern uint numElements;
 extern bool KNF;
 
+using namespace std;
+
 
 void KV::Clear()
 {
@@ -162,7 +164,7 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 
 void KV::PrintPrimImplikanten()
 {
-	srand(time(NULL)+rand());
+	srand(time(NULL) + rand());
 	for (uint i = 0; i < this->globalPic->size(); i++)
 	{
 		PrimImplikant* currentPI = this->globalPic->at(i);
@@ -170,35 +172,35 @@ void KV::PrintPrimImplikanten()
 		/*uint overflow = 0;													// at which sides the PrimImplikant overlaps
 		for (uint j = 0; j < currentPI->implikanten.size(); j++)
 		{
-			uint currentI = currentPI->implikanten[j];
-			uint w = (currentI & ((0x1 << (this->numVarX)) - 1));			// get all bits that make X (=w)
-			w ^= w / 2;
-			uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
-			h ^= h / 2;
+		uint currentI = currentPI->implikanten[j];
+		uint w = (currentI & ((0x1 << (this->numVarX)) - 1));			// get all bits that make X (=w)
+		w ^= w / 2;
+		uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
+		h ^= h / 2;
 
-			if (w == 0)
-				overflow |= 0x1;											// left side
-			else if (w == this->numFieldX - 1)
-				overflow |= 0x2;											// right side
-			else
-				overflow |= 0x4;
+		if (w == 0)
+		overflow |= 0x1;											// left side
+		else if (w == this->numFieldX - 1)
+		overflow |= 0x2;											// right side
+		else
+		overflow |= 0x4;
 
-			if (h == 0)
-				overflow |= 0x10;											// upper side
-			else if (h == this->numFieldY - 1)
-				overflow |= 0x20;											// lower side
-			else
-				overflow |= 0x40;
+		if (h == 0)
+		overflow |= 0x10;											// upper side
+		else if (h == this->numFieldY - 1)
+		overflow |= 0x20;											// lower side
+		else
+		overflow |= 0x40;
 		}
 
 		switch (overflow)
 		{
 		case 0x33:															// all 4 edges
-			break;
+		break;
 		case 0x30:															// overflows from top to bottom
-			break;
+		break;
 		case 0x03:															// overflows from left to right
-			break;
+		break;
 		default:
 
 		*/
@@ -207,24 +209,70 @@ void KV::PrintPrimImplikanten()
 
 
 
-			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;							// find coordinates for Rechteck
-			for (uint j = 0; j < currentPI->PI_groupCollection.size(); j++)
+		// uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;							// find coordinates for Rechteck
+
+
+		for (uint j = 0; j < currentPI->PI_groupCollection.size(); j++)
+		{
+			 
+
+			vector<Implikant_localisation*>* kullers = currentPI->PI_groupCollection[j]; 
+
+
+			for (uint k = 0; k < kullers->size(); k++)
 			{
-				vector<Implikant_localisation*>* kuller = currentPI->PI_groupCollection[j];
-				for (uint j = 0; j < kuller->size(); j++)
+
+				for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
 				{
-					uint x1 = (*kuller)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
+					uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
+
+					uint x1 = (*it)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
 					uint x2 = x1 + this->edgeLength;							// Lower coord
-					uint y1 = h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
+					uint y1 = (*it)->h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
 					uint y2 = y1 + this->edgeLength;							// Right coo
 
 					X1 = min(X1, x1);
 					X2 = max(X2, x2);
 					Y1 = min(Y1, y1);
 					Y2 = max(Y2, y2);
+
+					if (currentPI->name.find("|") != string::npos)
+					{
+						this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
+					}
+					else
+					{
+						uint random = rand() % 10;
+						X1 += random;
+						X2 -= random;
+						Y1 += random;
+						Y2 -= random;
+						if (currentPI->implikanten.size() == 1)
+							this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
+						else
+							this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
+					}
+
+
+
+
 				}
+				
+
+
+
+			}
+
+		}
+	}
+}
 
 				
+
+
+/*
+
+
 				uint w = currentPI->PI_groupCollection		// get all bits that make X (=w)
 				w ^= w / 2;
 				uint h = (currentI >> this->numVarX);						// get all bits that make Y (=h)
@@ -264,7 +312,7 @@ void KV::PrintPrimImplikanten()
 //------------------------------------------------------------------
 
 
-
+*/
 
 
 		
