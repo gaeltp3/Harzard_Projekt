@@ -215,54 +215,46 @@ void KV::PrintPrimImplikanten()
 		for (uint j = 0; j < currentPI->PI_groupCollection.size(); j++)
 		{
 			 
-
 			vector<Implikant_localisation*>* kullers = currentPI->PI_groupCollection[j]; 
 			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
 
-			for (uint k = 0; k < kullers->size(); k++)
-			{
 				
 
-				for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
-				{
+			for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
+			{
 					
 
-					uint x1 = (*it)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
-					uint x2 = x1 + this->edgeLength;							// Lower coord
-					uint y1 = (*it)->h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
-					uint y2 = y1 + this->edgeLength;							// Right coo
+				uint x1 = (*it)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
+				uint x2 = x1 + this->edgeLength;							// Lower coord
+				uint y1 = (*it)->h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
+				uint y2 = y1 + this->edgeLength;							// Right coo
 
-					X1 = min(X1, x1);
-					X2 = max(X2, x2);
-					Y1 = min(Y1, y1);
-					Y2 = max(Y2, y2);
+				X1 = min(X1, x1);
+				X2 = max(X2, x2);
+				Y1 = min(Y1, y1);
+				Y2 = max(Y2, y2);
 
-					if (currentPI->name.find("|") != string::npos)
-					{
-						this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
-					}
-					else
-					{
-						uint random = rand() % 10;
-						X1 += random;
-						X2 -= random;
-						Y1 += random;
-						Y2 -= random;
-						if (currentPI->implikanten.size() == 1)
-							this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
-						else
-							this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
-					}
-
-
-
-
+				if (currentPI->name.find("|") != string::npos)
+				{
+					this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
 				}
-				
+				else
+				{
+					uint random = rand() % 10;
+					X1 += random;
+					X2 -= random;
+					Y1 += random;
+					Y2 -= random;
+					if (currentPI->implikanten.size() == 1)
+						this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
+					else
+						this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
+				}
 
 
 
 			}
+				
 
 		}
 	}
