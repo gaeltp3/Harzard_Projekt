@@ -217,14 +217,15 @@ void KV::PrintPrimImplikanten()
 			 
 
 			vector<Implikant_localisation*>* kullers = currentPI->PI_groupCollection[j]; 
-
+			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
 
 			for (uint k = 0; k < kullers->size(); k++)
 			{
+				
 
 				for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
 				{
-					uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
+					
 
 					uint x1 = (*it)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
 					uint x2 = x1 + this->edgeLength;							// Lower coord
