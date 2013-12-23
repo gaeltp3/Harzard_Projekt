@@ -218,7 +218,6 @@ void KV::PrintPrimImplikanten()
 			vector<Implikant_localisation*>* kullers = currentPI->PI_groupCollection[j]; 
 			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
 
-				
 
 			for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
 			{
@@ -234,25 +233,24 @@ void KV::PrintPrimImplikanten()
 				Y1 = min(Y1, y1);
 				Y2 = max(Y2, y2);
 
-				if (currentPI->name.find("|") != string::npos)
-				{
-					this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
-				}
+
+
+			}
+			if (currentPI->name.find("|") != string::npos)
+			{
+				this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
+			}
+			else
+			{
+				uint random = rand() % 10;
+				X1 += random;
+				X2 -= random;
+				Y1 += random;
+				Y2 -= random;
+				if (currentPI->implikanten.size() == 1)
+					this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
 				else
-				{
-					uint random = rand() % 10;
-					X1 += random;
-					X2 -= random;
-					Y1 += random;
-					Y2 -= random;
-					if (currentPI->implikanten.size() == 1)
-						this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
-					else
-						this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
-				}
-
-
-
+					this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
 			}
 				
 

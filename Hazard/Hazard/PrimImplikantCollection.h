@@ -24,7 +24,7 @@ public:
 	bool contains(PrimImplikant* foreign);
 	void setgroupCollection1(PrimImplikant* &currentPI);
 	void setgroupCollection2(PrimImplikant* &currentPI,vector<Implikant_localisation*> &group);
-	bool Anwesenheit(Implikant_localisation* &I, vector<Implikant_localisation*> &group);
+	
 
 	void Dispose();
 

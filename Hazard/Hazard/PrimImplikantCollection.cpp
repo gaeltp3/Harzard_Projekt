@@ -58,23 +58,11 @@ bool PrimImplikantCollection::contains(PrimImplikant* foreign)
 	return false;
 }
 
-bool PrimImplikantCollection::Anwesenheit(Implikant_localisation* &I, vector<Implikant_localisation*> &group)
-{
 
-	for (vector<Implikant_localisation*>::iterator it = group.begin(); it < group.end(); it++)
-	{
-		if ((*it)->i == (I->i))
-		{
-			return true;
-		}
-
-	}
-	return false;
-}
 
 void PrimImplikantCollection::setgroupCollection1(PrimImplikant* &currentPI)
 {
-	vector<Implikant_localisation*>::iterator it1;
+	
 	vector<Implikant_localisation*> groupA;            // Jede I_vector wird in einem oder in Zwei vectoren
 	vector<Implikant_localisation*> groupB;            //  zuerst gespaltet.
 
@@ -85,7 +73,7 @@ void PrimImplikantCollection::setgroupCollection1(PrimImplikant* &currentPI)
 	
 
 
-	for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end(); it1++)
+	for (vector<Implikant_localisation*>::iterator it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end(); it1++)
 	{
 		if ((((*it1)->h) == (numVarY / 2) - 1) || (((*it1)->h) == (numVarY / 2)))
 		{
@@ -98,20 +86,20 @@ void PrimImplikantCollection::setgroupCollection1(PrimImplikant* &currentPI)
 
 	if (Linie_mitte)    // Wenn wahr ist. ES geht um Linie_mitte_Y
 	{
-		for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end(); it1++)
+		/*for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end(); it1++)
 		{
 			groupA.push_back(*it1);
 		}
-
-		currentPI->PI_groupCollection.push_back(&groupA);
+		*/
+		currentPI->PI_groupCollection.push_back(&(currentPI->I_Vector));
 		Linie_mitte = 0;
 	}
 	else
 	{
-		for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end(); it1++)
+		for (vector<Implikant_localisation*>::iterator it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end(); it1++)
 		{
 
-			if (((*it1)->h < (numVarY / 2) - 1))  // die Implikanten, deren h <= numVary/2 -1 sind im groupA
+			if ((*it1)->h < ((numVarY / 2) - 1))  // die Implikanten, deren h <= numVary/2 -1 sind im groupA
 			{                                          // gespeichert.
 
 				groupA.push_back(*it1);
@@ -142,7 +130,6 @@ void PrimImplikantCollection::setgroupCollection2(PrimImplikant* &currentPI, vec
 {
 
 	vector<Implikant_localisation*> hilfVec1, hilfVec2;
-	vector<Implikant_localisation*>::iterator it1;
 	uint numVarX = (uint)floor(dimension / 2.0f);
 	static int Linie_mitte;								// Zustand 0--> wird w überprüft im Vector
 	                                                    // Zustand 1 oder >1 -->wird w überprüft im Vector.
@@ -150,7 +137,7 @@ void PrimImplikantCollection::setgroupCollection2(PrimImplikant* &currentPI, vec
 
 
 
-	for (it1 = group.begin(); it1 < group.end(); it1++)
+	for (vector<Implikant_localisation*>::iterator it1 = group.begin(); it1 < group.end(); it1++)
 	{
 		if ((((*it1)->h) == (numVarX / 2) - 1) || (((*it1)->h) == (numVarX / 2)))
 		{
@@ -169,10 +156,10 @@ void PrimImplikantCollection::setgroupCollection2(PrimImplikant* &currentPI, vec
 	}
 	else
 	{
-		for (it1 = group.begin(); it1 < group.end(); it1++)
+		for (vector<Implikant_localisation*>::iterator it1 = group.begin(); it1 < group.end(); it1++)
 		{
 
-			if (((*it1)->w < (numVarX / 2) - 1))  // die Implikanten, deren w <= numVarX/2 -1 sind im groupA
+			if ((*it1)->w < ((numVarX / 2) - 1))  // die Implikanten, deren w <= numVarX/2 -1 sind im groupA
 			{                                     // gespeichert. wenn w größer, dann wird im hilfVec2 gespeichert
 
 				hilfVec1.push_back(*it1);
