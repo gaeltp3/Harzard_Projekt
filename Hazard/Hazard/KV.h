@@ -42,7 +42,7 @@ private:
 	PrimImplikantCollection* globalPic;
 	CellCollection* allCells;
 	vector<string>* variables;
-	vector<vector<Implikant_localisation*>*> PI_groupCollection;
+	
 
 	uint offsetX;						// Der freie Platz nach links in Pixeln
 	uint offsetY;						// Der freie Platz nach rechts in Pixeln
@@ -66,8 +66,8 @@ private:
 	void PrintCellValues();				// Erstellt die Werte der jeweiligen Zellen
 	void PrintPrimImplikanten();		// Erstellt die einzelnen Primimplikanten
 	void PrintString_Var();				// Erstellt den horizontalen TextVariable & vertikalen Textvariable
-	vector<Implikant_localisation*> setgroupCollection(vector<Implikant_localisation*> &group);
-	bool Anwesenheit(Implikant_localisation* &I, vector<Implikant_localisation*> &group);
+	
+	
 	
 	void Clear();
 	void Line(uint x1, uint y1, uint x2, uint y2, int color);																			// Zeichnet eine Linie mit Offset

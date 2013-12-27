@@ -9,6 +9,8 @@ extern uint dimension;
 extern uint numElements;
 extern bool KNF;
 
+using namespace std;
+
 
 void KV::Clear()
 {
@@ -162,49 +164,107 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 
 void KV::PrintPrimImplikanten()
 {
-	srand(time(NULL)+rand());
+	srand(time(NULL) + rand());
 	for (uint i = 0; i < this->globalPic->size(); i++)
 	{
 		PrimImplikant* currentPI = this->globalPic->at(i);
 
-		uint overflow = 0;													// at which sides the PrimImplikant overlaps
+		/*uint overflow = 0;													// at which sides the PrimImplikant overlaps
 		for (uint j = 0; j < currentPI->implikanten.size(); j++)
 		{
-			uint currentI = currentPI->implikanten[j];
-			uint w = (currentI & ((0x1 << (this->numVarX)) - 1));			// get all bits that make X (=w)
-			w ^= w / 2;
-			uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
-			h ^= h / 2;
+		uint currentI = currentPI->implikanten[j];
+		uint w = (currentI & ((0x1 << (this->numVarX)) - 1));			// get all bits that make X (=w)
+		w ^= w / 2;
+		uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
+		h ^= h / 2;
 
-			if (w == 0)
-				overflow |= 0x1;											// left side
-			else if (w == this->numFieldX - 1)
-				overflow |= 0x2;											// right side
-			else
-				overflow |= 0x4;
+		if (w == 0)
+		overflow |= 0x1;											// left side
+		else if (w == this->numFieldX - 1)
+		overflow |= 0x2;											// right side
+		else
+		overflow |= 0x4;
 
-			if (h == 0)
-				overflow |= 0x10;											// upper side
-			else if (h == this->numFieldY - 1)
-				overflow |= 0x20;											// lower side
-			else
-				overflow |= 0x40;
+		if (h == 0)
+		overflow |= 0x10;											// upper side
+		else if (h == this->numFieldY - 1)
+		overflow |= 0x20;											// lower side
+		else
+		overflow |= 0x40;
 		}
 
 		switch (overflow)
 		{
 		case 0x33:															// all 4 edges
-			break;
+		break;
 		case 0x30:															// overflows from top to bottom
-			break;
+		break;
 		case 0x03:															// overflows from left to right
-			break;
+		break;
 		default:
-			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;							// find coordinates for Rechteck
-			for (uint j = 0; j < currentPI->implikanten.size(); j++)
+
+		*/
+
+		// ab hier mache ich später weiter. Ich habe wieder Kopfschmerzen!!!
+
+
+
+		// uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;							// find coordinates for Rechteck
+
+
+		for (uint j = 0; j < currentPI->PI_groupCollection.size(); j++)
+		{
+			 
+			vector<Implikant_localisation*>* kullers = currentPI->PI_groupCollection[j]; 
+			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
+
+
+			for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
 			{
-				uint currentI = currentPI->implikanten[j];
-				uint w = (currentI & ((0x1 << (this->numVarX)) - 1));		// get all bits that make X (=w)
+					
+
+				uint x1 = (*it)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
+				uint x2 = x1 + this->edgeLength;							// Lower coord
+				uint y1 = (*it)->h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
+				uint y2 = y1 + this->edgeLength;							// Right coo
+
+				X1 = min(X1, x1);
+				X2 = max(X2, x2);
+				Y1 = min(Y1, y1);
+				Y2 = max(Y2, y2);
+
+
+
+			}
+			if (currentPI->name.find("|") != string::npos)
+			{
+				this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
+			}
+			else
+			{
+				uint random = rand() % 10;
+				X1 += random;
+				X2 -= random;
+				Y1 += random;
+				Y2 -= random;
+				if (currentPI->implikanten.size() == 1)
+					this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
+				else
+					this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
+			}
+				
+
+		}
+	}
+}
+
+				
+
+
+/*
+
+
+				uint w = currentPI->PI_groupCollection		// get all bits that make X (=w)
 				w ^= w / 2;
 				uint h = (currentI >> this->numVarX);						// get all bits that make Y (=h)
 				h ^= h / 2;
@@ -212,7 +272,7 @@ void KV::PrintPrimImplikanten()
 				uint x1 = w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
 				uint x2 = x1 + this->edgeLength;							// Lower coord
 				uint y1 = h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
-				uint y2 = y1 + this->edgeLength;							// Right coord
+				uint y2 = y1 + this->edgeLength;							// Right coo
 
 				X1 = min(X1, x1);
 				X2 = max(X2, x2);
@@ -242,114 +302,9 @@ void KV::PrintPrimImplikanten()
 
 //------------------------------------------------------------------
 
-bool KV:: Anwesenheit(Implikant_localisation* &I, vector<Implikant_localisation*> &group)
-{
 
-	for (vector<Implikant_localisation*>::iterator it = group.begin(); it < group.end(); it++)
-	{
-		if ((*it)->i == (I->i))
-		{
-			return true;
-		}
+*/
 
-	}
-	return false;
-}
-
-vector<Implikant_localisation*> KV::setgroupCollection(vector<Implikant_localisation*> &group)
-{
-	
-	vector<Implikant_localisation*> hilfVec1;
-	vector<Implikant_localisation*>::iterator it1, it2;
-	int schalter = 1;
-
-	//  Muss noch eine Überprufung der mitteLinie w der KV diagramm gemacht werden 
-
-	for (it1 = group.begin(); it1 < group.end() - 1; it1++) 
-	{
-		if (schalter)
-		{
-
-			hilfVec1.push_back(*it1);
-			schalter = 0;
-		}
-
-		for (it2 = it1 + 1; it2 < group.end(); it2++)
-		{
-
-			if ((((*it1)->w) == ((*it2)->w) && abs((int)((*it1)->h - (*it2)->h)) == 1) || ((*it1)->h) == ((*it2)->h) && abs((int)((*it1)->w - (*it2)->w)) == 1)
-			{
-
-				if (Anwesenheit((*it2), hilfVec1) == 0){
-
-					hilfVec1.push_back(*it2);
-					break;
-				}
-
-				break;
-			}
-			else
-			{
-				// Muss hier weiter programmiert.    
-			}
-
-		}
-
-		this->PI_groupCollection.push_back(&hilfVec1);
-	}
-}
-
-
-void KV::PrintPrimImplikanten()
-{
-
-	srand(time(NULL) + rand());
-
-	for (uint i = 0; i < this->globalPic->size(); i++)
-	{
-		PrimImplikant* currentPI = this->globalPic->at(i);
-		vector<Implikant_localisation*>::iterator it1;
-		vector<Implikant_localisation*> groupA;            // Jede I_vector wird in einem oder in Zwei vectoren
-		vector<Implikant_localisation*> groupB;            //  zuerst gespaltet.
-		int Linie_mitte = 0;
-
-		for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end() - 1; it1++)
-		{
-			if ((((*it1)->h) = (this->numVarY / 2) - 1) || (((*it1)->h) = (this->numVarY / 2)))
-			{
-				Linie_mitte++;      // test zu wissen ob die MitteLinie h  der KV diagramm erreicht ist.
-			}
-		}
-		for (it1 = currentPI->I_Vector.begin(); it1 < currentPI->I_Vector.end() - 1; it1++)
-		{
-
-			if (((*it1)->h < (this->numVarY / 2) - 1))  // die Implikanten, deren h <= numVary/2 -1 sind im groupA
-			{                                          // gespeichert.
-
-				groupA.push_back(*it1);
-
-
-			}
-			else if (Linie_mitte)
-			{
-				groupA.push_back(*it1);
-
-			}
-			else { groupB.push_back(*it1); }
-
-		}
-
-		if (groupA.size() != 0)
-		{
-			setgroupCollection(groupA);
-		}
-		if (groupB.size() != 0)
-		{
-			setgroupCollection(groupB);
-		}
-
-	}
-}
 
 		
 
