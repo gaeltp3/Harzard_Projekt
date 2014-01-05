@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <string>
+#include <algorithm>
 #include <vector>
 #include "PrimImplikant.h"
 #include "Implikant_localisation.h"
@@ -7,7 +8,7 @@
 using namespace std;
 
 bool PrimImplikant::valueAt(uint pos) {
-	for (vector<uint>::iterator i = implikanten.begin(); i < implikanten.end(); ++i)
+	for (vector<uint>::iterator i = elements.begin(); i < elements.end(); ++i)
 		if (*i == pos)
 			return true;
 
@@ -40,6 +41,31 @@ void PrimImplikant::parser(string input) {  // Analyser
 		implikant += (uint)c - (uint)'0';
 	}
 
-	implikanten.push_back(implikant);
+	elements.push_back(implikant);
 	I_Vector.push_back(new Implikant_localisation(implikant));
+}
+
+void PrimImplikant::sort()
+{
+	sort(this->elements.begin(), this->elements.end(), PrimImplikant::compareGray);
+}
+
+bool PrimImplikant::compareGray(uint &a, uint &b)
+{
+	return (a ^ (a/2)) < (b ^ (b/2));
+}
+
+void PrimImplikant::makeLocations()
+{
+	this->sort();
+	this->locations = new vector<KV_PiEleLoc*>();
+	for (uint i = 0; i < this->elements.size(); i++)
+		this->locations.push_back(new KV_PiEleLoc(this->elements[i]));
+}
+
+vector<KV_PiEleLoc*>* locations()
+{
+	if (this->locations == NULL)
+		this->makeLocations();
+	return this->locations;
 }

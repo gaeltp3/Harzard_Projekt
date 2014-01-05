@@ -1,5 +1,4 @@
-#ifndef PRIMIMPLIKANT
-#define PRIMIMPLIKANT
+#pragma once
 
 #include <string>
 #include <vector>
@@ -9,9 +8,16 @@ using namespace std;
 
 class PrimImplikant
 {
+private:
+	bool compareGray(uint &a, uint &b);
+	void makeLocations();
+
+	vector<KV_PiEleLoc*>* locations = NULL;
+
 public:
 	string name;
 	uint id;
+	vector<uint> elements;
 
 	PrimImplikant(string input)
 	{
@@ -42,14 +48,22 @@ public:
 		I_Vector.push_back(new Implikant_localisation(input2));
 	}
 
-	bool PrimImplikant::valueAt(uint position);
-	void PrimImplikant::parser(string input);
-	
+	bool valueAt(uint position);
+	void parser(string input);
+	void sort();
+	vector<KV_PiEleLoc*>* locations();
 
-	
-
-	vector<uint> implikanten;
-	vector<Implikant_localisation*> I_Vector;
-	vector<vector<Implikant_localisation*>*> PI_groupCollection;
+	~PrimImplikant()
+	{
+		if (this->locations)
+		{
+			for (uint i = 0; i < this->locations.size(); i++)
+			{
+				delete this->locations[i];
+				this->locations[i] = NULL;
+			}
+			delete this->locations;
+			this->locations = NULL;
+		}
+	}
 };
-#endif
