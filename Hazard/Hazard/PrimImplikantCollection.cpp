@@ -14,21 +14,21 @@ void PrimImplikantCollection::add(string input)
 {
 	PrimImplikant* PI = new PrimImplikant(input);
 
-	PI->id = this->size();
+	PI->id = PrimImplikantCollection::globalCount++;
 	this->setgroupCollection1(PI);
 	this->add(PI);
 }
 void PrimImplikantCollection::add(uint input)
 {
 	PrimImplikant* PI = new PrimImplikant(input);
-	PI->id = this->size();
+	PI->id = PrimImplikantCollection::globalCount++;
 	this->setgroupCollection1(PI);
 	this->add(PI);
 }
 void PrimImplikantCollection::add(uint input1, uint input2)
 {
 	PrimImplikant* PI = new PrimImplikant(input1, input2);
-	PI->id = this->size();
+	PI->id = PrimImplikantCollection::globalCount++;
 	this->setgroupCollection1(PI);
 	this->add(PI);
 }

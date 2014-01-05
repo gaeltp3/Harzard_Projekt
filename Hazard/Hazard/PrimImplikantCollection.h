@@ -35,6 +35,8 @@ public:
 	PrimImplikant* operator[](uint &index);
 private:
 	vector<PrimImplikant*> PIVector;
+
+	static uint globalCount = 0;
 };
 
 #endif
