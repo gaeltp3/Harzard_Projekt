@@ -128,7 +128,6 @@ void KV::PrintVariables()	// Erstellt die Werte der Variablen in der ersten X- u
 	}
 }
 
-//---------------------------------------------------------------
 void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯▯
 {							//											 ▯ x x
 						   //											 ▯ x x
@@ -161,156 +160,103 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 	}
 }
 
-
 void KV::PrintPrimImplikanten()
 {
-	srand(time(NULL) + rand());
-	for (uint i = 0; i < this->globalPic->size(); i++)
+	srand(time(NULL) ^ rand());
+	vector<KV_PiGroup*> piGroups;
+
+	for (uint i = 0; i < this->globalPic->size(); i++)						// for each PrimImplikant
 	{
 		PrimImplikant* currentPI = this->globalPic->at(i);
 
-		/*uint overflow = 0;													// at which sides the PrimImplikant overlaps
-		for (uint j = 0; j < currentPI->implikanten.size(); j++)
+		uint color;
+		char random;
+		if (currentPI->name.find("|") != string::npos)						// define a color for this PI
 		{
-		uint currentI = currentPI->implikanten[j];
-		uint w = (currentI & ((0x1 << (this->numVarX)) - 1));			// get all bits that make X (=w)
-		w ^= w / 2;
-		uint h = (currentI >> this->numVarX);							// get all bits that make Y (=h)
-		h ^= h / 2;
-
-		if (w == 0)
-		overflow |= 0x1;											// left side
-		else if (w == this->numFieldX - 1)
-		overflow |= 0x2;											// right side
-		else
-		overflow |= 0x4;
-
-		if (h == 0)
-		overflow |= 0x10;											// upper side
-		else if (h == this->numFieldY - 1)
-		overflow |= 0x20;											// lower side
-		else
-		overflow |= 0x40;
+			random = -1;
+			color = RED;
 		}
-
-		switch (overflow)
+		else
 		{
-		case 0x33:															// all 4 edges
-		break;
-		case 0x30:															// overflows from top to bottom
-		break;
-		case 0x03:															// overflows from left to right
-		break;
-		default:
-
-		*/
-
-		// ab hier mache ich später weiter. Ich habe wieder Kopfschmerzen!!!
-
-
-
-		// uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;							// find coordinates for Rechteck
-
-
-		for (uint j = 0; j < currentPI->PI_groupCollection.size(); j++)
-		{
-			 
-			vector<Implikant_localisation*>* kullers = currentPI->PI_groupCollection[j]; 
-			uint X1 = -1, X2 = 0, Y1 = -1, Y2 = 0;
-
-
-			for (vector<Implikant_localisation*>::iterator it = kullers->begin(); it < kullers->end(); it++)
-			{
-					
-
-				uint x1 = (*it)->w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
-				uint x2 = x1 + this->edgeLength;							// Lower coord
-				uint y1 = (*it)->h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
-				uint y2 = y1 + this->edgeLength;							// Right coo
-
-				X1 = min(X1, x1);
-				X2 = max(X2, x2);
-				Y1 = min(Y1, y1);
-				Y2 = max(Y2, y2);
-
-
-
-			}
-			if (currentPI->name.find("|") != string::npos)
-			{
-				this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
-			}
+			random = rand() % 10;
+			if (currentPI->implikanten.size() == 1)
+				color = GREEN;
 			else
-			{
-				uint random = rand() % 10;
-				X1 += random;
-				X2 -= random;
-				Y1 += random;
-				Y2 -= random;
-				if (currentPI->implikanten.size() == 1)
-					this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
-				else
-					this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
-			}
-				
-
+				color = RGB(rand() % 256; rand() % 256; rand() % 256);
 		}
-	}
+
+
+		vector<KV_PiEleLoc*>* locations = currentPI->locations();
+		for (uint j = 0; j < locations.size(); j++)		// for each Element in PrimImplikant
+		{
+			KV_PiEleLoc* currentEl = locations[j];
+
+			bool foundGroup = false;
+			for (uint k = 0; k < piGroups.size(); k++)						// for each Group/Kuller of this PrimImplikant
+			{
+				KV_PiGroup* currentGroup = piGroups[k];
+				if (currentGroup->LiesNextTo(currentEl))
+				{
+					currentGroup->Add(currentEl);							// sort Element into group
+					foundGroup = true;
+					break;
+				}
+			}	// for each Group
+
+			if (foundGroup == false)										// element was not added to a group
+			{
+				KV_PiGroup* newGroup = new KV_PiGroup();
+				newGroup->Add(currentEl);
+				piGroups.add(newGroup);
+			}
+		}	// for each Element in PrimImplikant
+
+		for (uint k = 0; k < piGroups.size(); k++)							// for each Group/Kuller of this PrimImplikant
+		{
+			this->PrintPrimImplikantenGroup(piGroups[k], random, color);	// draw it
+
+			piGroups[k]->Dispose();											// delete all KV_PiEleLocs
+			delete piGroups[k];
+			piGroups[k] = NULL;
+		}
+		piGroups.clear();
+	}	// for each PrimImplikant
 }
 
-				
+// Prints the Kuller of a KV_PiGroup
+void KV::PrintPrimImplikantenGroup(KV_PiGroup* &group, char &random, uint &color)
+{
+	group->MakeCoords();		// makes X1, X2, Y1, Y2
+	uint X1 = group->X1;
+	uint X2 = group->X2;
+	uint Y1 = group->Y1;
+	uint Y2 = group->Y2;
 
 
-/*
-
-
-				uint w = currentPI->PI_groupCollection		// get all bits that make X (=w)
-				w ^= w / 2;
-				uint h = (currentI >> this->numVarX);						// get all bits that make Y (=h)
-				h ^= h / 2;
-
-				uint x1 = w  * (this->edgeLength + 1) + this->VarY_Length;					// Upper coord
-				uint x2 = x1 + this->edgeLength;							// Lower coord
-				uint y1 = h * (this->edgeLength + 1) + this->VarX_Length;					// Left  coord
-				uint y2 = y1 + this->edgeLength;							// Right coo
-
-				X1 = min(X1, x1);
-				X2 = max(X2, x2);
-				Y1 = min(Y1, y1);
-				Y2 = max(Y2, y2);
-			}
-
-			if (currentPI->name.find("|") != string::npos)
-			{
-				this->Rechteck(X1 + 12, Y1 + 9, X2 - 12, Y2 - 9, RED, TRANS);
-			}
-			else
-			{
-				uint random = rand() % 10;
-				X1 += random;
-				X2 -= random;
-				Y1 += random;
-				Y2 -= random;
-				if (currentPI->implikanten.size() == 1)
-					this->Rechteck(X1, Y1, X2, Y2, GREEN, TRANS);
-				else
-					this->Rechteck(X1, Y1, X2, Y2, BLUE, TRANS);
-			}
-		}
+	if (random == -1)			// make hazard groups as small as possible
+	{
+		X1 += 12;
+		X2 -= 12;
+		Y1 += 9;
+		Y2 -= 9;
 	}
+	else						// make size random, so the groups won't overlap
+	{
+		X1 += random;
+		X2 -= random;
+		Y1 += random;
+		Y2 -= random;
+	}
+	this->Rechteck(X1, Y1, X2, Y2, color, TRANS);
 }
 
-//------------------------------------------------------------------
-
-
-*/
-
-
-		
 
 
 
-			
+
+
+
+
 void KV::Line(uint x1, uint y1, uint x2, uint y2, int color)
 {
 	line(x1 + this->offsetX, y1 + this->offsetY, x2 + this->offsetX, y2 + this->offsetY, color);
@@ -339,18 +285,19 @@ void KV::Rechteck(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill)
 
 
 
+// convert the binary representation of x to a string with the specified length
 char* KV::Binary(uint x, char length)
 {
-	// warning: this breaks for numbers with more than 64 bits
-	char* buffer = new char[length+1];
-	char* p = buffer + length;
+	// warning: this breaks for numbers with more than 64 bits (= variables)
+	char* c = new char[length+1];
+	c += length;					// last char
 
-	*p = 0;
+	*c = 0;
 	do
 	{
-		*--p = '0' + (x & 1);
+		*--c = '0' + (x & 1);		// 0 or 1 at the specified position
 		x >>= 1;
 	} while (--length);
 
-	return buffer;
+	return c;
 }

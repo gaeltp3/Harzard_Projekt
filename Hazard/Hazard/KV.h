@@ -64,7 +64,8 @@ private:
 	void PrintRaster();					// Erstellt die Felder
 	void PrintVariables();				// Erstellt die Werte der Variablen in der ersten X- und Y-Spalte
 	void PrintCellValues();				// Erstellt die Werte der jeweiligen Zellen
-	void PrintPrimImplikanten();		// Erstellt die einzelnen Primimplikanten
+	void PrintPrimImplikanten();		// Generiert die einzelnen PrimImplikanten-Kuller (Gruppen)
+	void PrintPrimImplikantenGroup(KV_PiGroup* &group, char &random, uint &color);	// Erstellt die einzelnen PrimImplikanten-Kuller
 	void PrintString_Var();				// Erstellt den horizontalen TextVariable & vertikalen Textvariable
 	
 	
