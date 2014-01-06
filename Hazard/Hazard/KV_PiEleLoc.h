@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
+#include "Tools.h"
 
 using namespace std;
 
@@ -20,9 +21,9 @@ public:
 		this->i = i;
 
 		this->w = i & ((0x1 << (numVarX)) - 1);		// get x coord
-		this->w ^= w/2;								// make it gray
+		this->w = Tools::GrayToBinary(w);
 
 		this->h = i >> numVarX;						// get y coord
-		this->h ^= h/2;								// make it gray
+		this->h = Tools::GrayToBinary(h);
 	}
 };

@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include "Tools.h"
 #include "PrimImplikant.h"
 
 using namespace std;
@@ -53,11 +54,7 @@ void PrimImplikant::sort()
 
 bool PrimImplikant::compareGray(uint a, uint b)
 {
-	for (uint i = 1; i < dimension; i++)
-		a ^= a / 2;		// convert a from gray to binary
-	for (uint i = 1; i < dimension; i++)
-		b ^= b / 2;		// convert b from gray to binary
-	return a < b;
+	return Tools::GrayToBinary(a) < Tools::GrayToBinary(b);
 }
 
 void PrimImplikant::makeLocations()
