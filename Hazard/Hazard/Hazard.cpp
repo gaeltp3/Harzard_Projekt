@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <Windows.h>
 #include "CParser.h"
 #include "PrimImplikant.h"
 #include "PrimImplikantCollection.h"
@@ -15,26 +16,58 @@ using namespace std;
 uint dimension = 0;			// = variables.size()
 uint numElements = 0;		// = 2 ^ dimension
 bool KNF = false;
+bool fileChosen = false;
+char fnInput[256];
+char fnError[256];
+char fnLists[256];
 
 
 int open_files(FILE * &input, FILE * &error, FILE * &list)
 {
-	fopen_s(&input, "res\\input.txt", "r");
-	if (input == 0)
+	if (fileChosen == false)
 	{
-		cout << "Fehler Inputdatei";
+		GetCurrentDirectory(sizeof(fnInput), fnInput);
+		strcpy_s(fnError, (string(fnInput) + "\\res\\errorParser.txt").c_str());
+		strcpy_s(fnLists, (string(fnInput) + "\\res\\listParser.txt").c_str());
+		strcpy_s(fnInput, (string(fnInput) + "\\res\\input.txt").c_str());
+
+		OPENFILENAME ofn;
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = fnInput;
+		ofn.nMaxFile = sizeof(fnInput);
+		ofn.lpstrFilter = "All\0*.*\0Text\0*.TXT\0";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		if (GetOpenFileName(&ofn) != TRUE)
+		{
+			cout << "Auswahl der Inputdatei abgebrochen!";
+			return 1;
+		}
+		fileChosen = true;
+	}
+
+	fopen_s(&input, fnInput, "r");
+	if (input == NULL)
+	{
+		perror("Fehler beim Lesen der Inputdatei");
 		return 1;
 	}
-	fopen_s(&error, "res\\errorParser.txt", "a");
-	if (error == 0)
+	fopen_s(&error, fnError, "a");
+	if (error == NULL)
 	{
-		cout << "Fehler Fehlerdatei";
+		perror("Fehler beim Öffnen der Fehlerdatei");
 		return 1;
 	}
-	fopen_s(&list, "res\\listParser.txt", "w");
-	if (list == 0)
+	fopen_s(&list, fnLists, "w");
+	if (list == NULL)
 	{
-		cout << "Fehler Listdatei";
+		perror("Fehler beim Öffnen der Listdatei");
 		return 1;
 	}
 	return 0;
@@ -49,9 +82,7 @@ void pause()
 
 void user_main(void)
 {
-	FILE * input;
-	FILE * error;
-	FILE * list;
+	FILE * input, * error, * list;
 	if (open_files(input, error, list) != 0)
 	{
 		pause();
