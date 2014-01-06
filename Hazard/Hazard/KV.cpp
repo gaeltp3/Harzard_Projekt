@@ -174,22 +174,36 @@ void KV::PrintPrimImplikanten()
 		if (currentPI->name.find("|") != string::npos)						// define a color for this PI
 		{
 			random = -1;
-			color = RED;
+			uint r  = rand() % 128 + 128;
+			uint gb = rand() % 100;
+			color = RGB(r, gb, gb);							// some red color
 		}
 		else
 		{
 			random = rand() % 10;
-			if (currentPI->implikanten.size() == 1)
+			if (currentPI->elements.size() == 1)
 				color = GREEN;
 			else
-				color = RGB(rand() % 256; rand() % 256; rand() % 256);
+			{
+				uint r, g, b;
+				do
+				{
+					r = rand() % 256;
+					g = rand() % 256;
+					b = rand() % 256;
+				}
+				while (
+					(r + g + b) / 3 > 200 ||				// avoid light colors
+					r > g + b);								// avoid red   colors
+				color = RGB(r, g, b);
+			}
 		}
 
 
 		vector<KV_PiEleLoc*>* locations = currentPI->locations();
-		for (uint j = 0; j < locations.size(); j++)		// for each Element in PrimImplikant
+		for (uint j = 0; j < locations->size(); j++)		// for each Element in PrimImplikant
 		{
-			KV_PiEleLoc* currentEl = locations[j];
+			KV_PiEleLoc* currentEl = locations->at(j);
 
 			bool foundGroup = false;
 			for (uint k = 0; k < piGroups.size(); k++)						// for each Group/Kuller of this PrimImplikant
@@ -207,7 +221,7 @@ void KV::PrintPrimImplikanten()
 			{
 				KV_PiGroup* newGroup = new KV_PiGroup();
 				newGroup->Add(currentEl);
-				piGroups.add(newGroup);
+				piGroups.push_back(newGroup);
 			}
 		}	// for each Element in PrimImplikant
 
@@ -215,7 +229,6 @@ void KV::PrintPrimImplikanten()
 		{
 			this->PrintPrimImplikantenGroup(piGroups[k], random, color);	// draw it
 
-			piGroups[k]->Dispose();											// delete all KV_PiEleLocs
 			delete piGroups[k];
 			piGroups[k] = NULL;
 		}
@@ -224,9 +237,9 @@ void KV::PrintPrimImplikanten()
 }
 
 // Prints the Kuller of a KV_PiGroup
-void KV::PrintPrimImplikantenGroup(KV_PiGroup* &group, char &random, uint &color)
+void KV::PrintPrimImplikantenGroup(KV_PiGroup* &group, char random, uint &color)
 {
-	group->MakeCoords();		// makes X1, X2, Y1, Y2
+	group->MakeCoords(this->edgeLength, this->VarX_Length, this->VarY_Length);		// makes X1, X2, Y1, Y2
 	uint X1 = group->X1;
 	uint X2 = group->X2;
 	uint Y1 = group->Y1;
@@ -235,10 +248,12 @@ void KV::PrintPrimImplikantenGroup(KV_PiGroup* &group, char &random, uint &color
 
 	if (random == -1)			// make hazard groups as small as possible
 	{
-		X1 += 12;
-		X2 -= 12;
-		Y1 += 9;
-		Y2 -= 9;
+		random = rand() % 2;
+		X1 += 12 - random;
+		X2 -= 12 - random;
+		random = rand() % 2;
+		Y1 += 9 - random;
+		Y2 -= 9 - random;
 	}
 	else						// make size random, so the groups won't overlap
 	{

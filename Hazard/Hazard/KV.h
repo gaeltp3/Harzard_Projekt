@@ -3,8 +3,8 @@
 #include <string>
 #include "Cell.h"
 #include "CellCollection.h"
+#include "KV_PiGroup.h"
 #include "PrimImplikantCollection.h"
-#include "Implikant_localisation.h"
 
 extern uint dimension;
 extern uint numElements;
@@ -65,7 +65,7 @@ private:
 	void PrintVariables();				// Erstellt die Werte der Variablen in der ersten X- und Y-Spalte
 	void PrintCellValues();				// Erstellt die Werte der jeweiligen Zellen
 	void PrintPrimImplikanten();		// Generiert die einzelnen PrimImplikanten-Kuller (Gruppen)
-	void PrintPrimImplikantenGroup(KV_PiGroup* &group, char &random, uint &color);	// Erstellt die einzelnen PrimImplikanten-Kuller
+	void PrintPrimImplikantenGroup(KV_PiGroup* &group, char random, uint &color);	// Erstellt die einzelnen PrimImplikanten-Kuller
 	void PrintString_Var();				// Erstellt den horizontalen TextVariable & vertikalen Textvariable
 	
 	
