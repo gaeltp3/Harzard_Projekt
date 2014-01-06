@@ -15,7 +15,7 @@ private:
 public:
 	bool LiesNextTo(KV_PiEleLoc* &el);
 	void Add(KV_PiEleLoc* &el);
-	void MakeCoords();
+	void MakeCoords(uint edgeLength, uint VarX_Length, uint VarY_Length);
 
 	KV_PiEleLoc* operator[](uint &index);
 	KV_PiEleLoc* at(uint &index);

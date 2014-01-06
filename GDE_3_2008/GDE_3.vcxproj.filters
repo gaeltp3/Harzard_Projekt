@@ -75,6 +75,9 @@
     <ClCompile Include="..\Hazard\Hazard\KV.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\Hazard\Hazard\KV_PiGroup.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -140,7 +143,10 @@
     <ClInclude Include="..\Hazard\Hazard\KV.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="..\Hazard\Hazard\Implikant_localisation.h">
+    <ClInclude Include="..\Hazard\Hazard\KV_PiGroup.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Hazard\Hazard\KV_PiEleLoc.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,7 +28,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -119,6 +119,7 @@
     <ClCompile Include="..\Hazard\Hazard\CParser.cpp" />
     <ClCompile Include="..\Hazard\Hazard\Hazard.cpp" />
     <ClCompile Include="..\Hazard\Hazard\KV.cpp" />
+    <ClCompile Include="..\Hazard\Hazard\KV_PiGroup.cpp" />
     <ClCompile Include="..\Hazard\Hazard\PrimImplikant.cpp" />
     <ClCompile Include="..\Hazard\Hazard\PrimImplikantCollection.cpp" />
     <ClCompile Include="..\Hazard\Hazard\Wertetabelle.cpp" />
@@ -140,8 +141,9 @@
     <ClInclude Include="..\Hazard\Hazard\Cell.h" />
     <ClInclude Include="..\Hazard\Hazard\CellCollection.h" />
     <ClInclude Include="..\Hazard\Hazard\Cparser.h" />
-    <ClInclude Include="..\Hazard\Hazard\Implikant_localisation.h" />
     <ClInclude Include="..\Hazard\Hazard\KV.h" />
+    <ClInclude Include="..\Hazard\Hazard\KV_PiEleLoc.h" />
+    <ClInclude Include="..\Hazard\Hazard\KV_PiGroup.h" />
     <ClInclude Include="..\Hazard\Hazard\PrimImplikant.h" />
     <ClInclude Include="..\Hazard\Hazard\PrimImplikantCollection.h" />
     <ClInclude Include="..\Hazard\Hazard\Wertetabelle.h" />
