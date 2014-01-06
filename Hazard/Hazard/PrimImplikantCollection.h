@@ -1,16 +1,13 @@
-//#include <iostream>
+#pragma once
+
 #include <string>
 #include <vector>
 #include "PrimImplikant.h"
-#include "Implikant_localisation.h"
 
 using namespace std;
 extern uint dimension;
 extern uint numElements;
 extern bool KNF;
-
-#ifndef PRIMIMPLIKANTCOLLEC
-#define PRIMIMPLIKANTCOLLEC
 
 class PrimImplikantCollection{
 public:
@@ -22,8 +19,6 @@ public:
 	bool valueAt(uint position);
 	PrimImplikantCollection primImplikantenAt(uint position);
 	bool contains(PrimImplikant* foreign);
-	void setgroupCollection1(PrimImplikant* &currentPI);
-	void setgroupCollection2(PrimImplikant* &currentPI,vector<Implikant_localisation*> &group);
 	
 
 	void Dispose();
@@ -36,7 +31,5 @@ public:
 private:
 	vector<PrimImplikant*> PIVector;
 
-	static uint globalCount = 0;
+	static uint globalCount;
 };
-
-#endif

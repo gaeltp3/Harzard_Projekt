@@ -2,17 +2,17 @@
 
 #include <string>
 #include <vector>
-#include "Implikant_localisation.h"
+#include "KV_PiEleLoc.h"
 
 using namespace std;
 
 class PrimImplikant
 {
 private:
-	bool compareGray(uint &a, uint &b);
+	static bool compareGray(uint a, uint b);
 	void makeLocations();
 
-	vector<KV_PiEleLoc*>* locations = NULL;
+	vector<KV_PiEleLoc*>* _locations;
 
 public:
 	string name;
@@ -21,31 +21,31 @@ public:
 
 	PrimImplikant(string input)
 	{
-		name = input;
-		parser(input);
+		this->name = input;
+		this->parser(input);
+		this->_locations = NULL;
 	}
 	PrimImplikant(uint input)
 	{
 		char nameC[sizeof(uint)*8+1];
 		_itoa_s(input, nameC, sizeof(uint)*8+1, 10);
-		name = nameC;
+		this->name = nameC;
 
-		implikanten.push_back(input);
-		I_Vector.push_back(new Implikant_localisation(input));
+		this->elements.push_back(input);
+		this->_locations = NULL;
 	}
 	PrimImplikant(uint input1, uint input2)
 	{
 		char nameC[sizeof(uint)*8+1];
 		_itoa_s(input1, nameC, sizeof(uint)*8+1, 10);
-		name = nameC;
+		this->name = nameC;
 		_itoa_s(input2, nameC, sizeof(uint)*8+1, 10);
-		name.append("|");
-		name.append(nameC);
+		this->name.append("|");
+		this->name.append(nameC);
 
-		implikanten.push_back(input1);
-		I_Vector.push_back(new Implikant_localisation(input1));
-		implikanten.push_back(input2);
-		I_Vector.push_back(new Implikant_localisation(input2));
+		this->elements.push_back(input1);
+		this->elements.push_back(input2);
+		this->_locations = NULL;
 	}
 
 	bool valueAt(uint position);
@@ -55,15 +55,13 @@ public:
 
 	~PrimImplikant()
 	{
-		if (this->locations)
+		if (this->_locations)
 		{
-			for (uint i = 0; i < this->locations.size(); i++)
-			{
-				delete this->locations[i];
-				this->locations[i] = NULL;
-			}
-			delete this->locations;
-			this->locations = NULL;
+			for (uint i = 0; i < this->_locations->size(); i++)
+				delete this->_locations->at(i);
+
+			delete this->_locations;
+			this->_locations = NULL;
 		}
 	}
 };
