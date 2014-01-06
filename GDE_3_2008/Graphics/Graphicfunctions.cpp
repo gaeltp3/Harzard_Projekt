@@ -208,7 +208,7 @@ int mouseclick(int *x, int *y)	// Wartet auf einen Mausklick und gibt dann butto
 	while (theApp.vw->MouseClick == 0)		// Warten bis eine Maustaste gedrueckt wird.
 		{ 
 			DoEvents();
-			if(StopProcess())break;
+			if(stopProcess())break;
 			Sleep(20);						// 20ms warten
 		}			
 	*x = theApp.vw->MousePoint.x;			// Zurueckgeben der x-Koordinate des Mauszeigers.
@@ -247,7 +247,7 @@ void updatescr()				// Neuzeichnen des gesamten Zeichenbereiches.
 {
 	theApp.vw->Invalidate(FALSE);	// Zeichenbereich aktualisieren (GDEView::OnPaint() wird aufgerufen)
 }
-BOOL StopProcess()
+bool stopProcess()
 {
-	return theApp.m_stopflag ;
+	return (bool)theApp.m_stopflag ;
 }

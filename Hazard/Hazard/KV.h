@@ -1,3 +1,5 @@
+#pragma once
+
 #include "stdafx.h"
 #include <vector>
 #include <string>
@@ -10,10 +12,6 @@ extern uint dimension;
 extern uint numElements;
 extern bool KNF;
 
-
-#ifndef _KV_H
-#define _KV_H
-
 class KV
 {
 public:
@@ -21,6 +19,9 @@ public:
 	void Print(uint offsetX, uint offsetY);				// Ausgabe-Methode, KV-Diagramm an der Position [offsetX | offsetY]
 	uint width();										// Gibt die Breite eines KV-Diagramms zurück (widthPx)
 	uint height();										// Gibt die Höhe   eines KV-Diagramms zurück (heightPx)
+
+	void Buttons();
+	bool StopProcess();
 
 	// Konstruktor
 	KV(PrimImplikantCollection* globalPic, CellCollection* allCells, uint size, vector<string>* &variables)
@@ -71,6 +72,7 @@ private:
 	
 	
 	void Clear();
+
 	void Line(uint x1, uint y1, uint x2, uint y2, int color);																			// Zeichnet eine Linie mit Offset
 	void Text(uint x, uint y, uint size, int color, int bkcolor, int angle, int align, char* theText);									// Zeichnet einen Text mit Offset
 	void KV::TextBox(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);		// Zeichnet eine TextBox mit Offset
@@ -82,4 +84,3 @@ private:
 
 
 #define CENTER SINGLE_LINE|CENTER_ALIGN|VCENTER_ALIGN
-#endif

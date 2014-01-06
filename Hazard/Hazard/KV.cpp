@@ -3,11 +3,13 @@
 #include "Cell.h"
 #include "PrimImplikantCollection.h"
 #include "..\..\GDE_3_2008\graphics\graphicfunctions.h"
+#include "Tools.h"
 #include "KV.h"
 
 extern uint dimension;
 extern uint numElements;
 extern bool KNF;
+extern bool fileChosen;
 
 using namespace std;
 
@@ -26,6 +28,9 @@ void KV::Print(uint offset)
 }
 void KV::Print(uint offsetX, uint offsetY)
 {
+	if (this->numVarX == 0 || this->numVarY == 0)
+		return;
+
 	this->offsetX = offsetX;
 	this->offsetY = offsetY;
 
@@ -112,7 +117,7 @@ void KV::PrintVariables()	// Erstellt die Werte der Variablen in der ersten X- u
 	{
 		uint XL = w * (this->edgeLength + 1) + this->VarY_Length;
 		uint XR = XL + this->edgeLength;
-		char* value = this->Binary(w ^ (w / 2), this->numVarX);		// in Gray und String umwandeln
+		char* value = Tools::BinaryToChars(w ^ (w / 2), this->numVarX);		// in Gray und String umwandeln
 		this->TextBoxBold(XL, 0, XR, this->VarX_Length, 10, BLACK, TRANS, TRANS, SINGLE_LINE|CENTER_ALIGN|BOTTOM_ALIGN, value);
 		delete value;
 	}
@@ -122,7 +127,7 @@ void KV::PrintVariables()	// Erstellt die Werte der Variablen in der ersten X- u
 	{
 		uint YT = h * (this->edgeLength + 1) + this->VarX_Length + 1;
 		uint YB = YT + this->edgeLength;
-		char* value = this->Binary(h ^ (h / 2), this->numVarY);		// in Gray und String umwandeln
+		char* value = Tools::BinaryToChars(h ^ (h / 2), this->numVarY);		// in Gray und String umwandeln
 		this->TextBoxBold(0, YT, this->VarY_Length-5, YB, 10, BLACK, TRANS, TRANS, SINGLE_LINE|RIGHT_ALIGN|VCENTER_ALIGN, value);
 		delete value;
 	}
@@ -130,7 +135,7 @@ void KV::PrintVariables()	// Erstellt die Werte der Variablen in der ersten X- u
 
 void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯▯
 {							//											 ▯ x x
-						   //											 ▯ x x
+							//											 ▯ x x
 	for (uint h = 0; h < this->numFieldY; h++)							// jede Spalte durchgehen
 	{
 		uint YT = h * (this->edgeLength + 1)+ this->VarX_Length;		// Y Positionen berechnen
@@ -148,21 +153,23 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 			/*
 			char* I = new char[(int)(ceil(log10((float)numElements)))+1];
 			itoa(i, I, 10);
-			this->TextBox(XL, YT, XR, YB, 10, BLACK, TRANSPARENT, TRANSPARENT, CENTER, I);
+			this->TextBox(XL, YT, XR, YB, 10, BLACK, TRANS, TRANS, CENTER, I);
 			*/
 
 			// Dies sind die Zellwerte:
+			///*
 			char* I = new char[2];
 			_itoa_s(this->allCells->at(i)->value, I, 2, 10);
 			this->TextBox(XL, YT, XR, YB, 10, BLACK, TRANS, TRANS, CENTER, I);
 			delete I;
+			//*/
 		}
 	}
 }
 
 void KV::PrintPrimImplikanten()
 {
-	srand(time(NULL) ^ rand());
+	srand((uint)time(NULL) ^ rand());
 	vector<KV_PiGroup*> piGroups;
 
 	for (uint i = 0; i < this->globalPic->size(); i++)						// for each PrimImplikant
@@ -268,7 +275,34 @@ void KV::PrintPrimImplikantenGroup(KV_PiGroup* &group, char random, uint &color)
 
 
 
+void KV::Buttons()
+{
+	int b, h, x, y;
 
+	get_drawarea(&b, &h);
+
+	textbox(b-120, h-40, b-5,   h-5, 12, BLACK, GREY, RGB(50,50,50), SINGLE_LINE|VCENTER_ALIGN|CENTER_ALIGN, "Restart");
+	textbox(b-240, h-40, b-125, h-5, 12, BLACK, GREY, RGB(50,50,50), SINGLE_LINE|VCENTER_ALIGN|CENTER_ALIGN, "Other file");
+	updatescr();
+
+	while (
+		!(mouseclick(&x,&y) == 1 && (y > h-40 && y < h-5) && (
+			(x > b-120 && x < b-5)   ||
+			(x > b-240 && x < b-125)
+		 )))
+	{
+		printf(".");
+		if(stopProcess())break;
+	};
+
+	if ((x > b-240 && x < b-125) && (y > h-40 && y < h-5))
+		fileChosen = false;
+}
+
+bool KV::StopProcess()
+{
+	return (bool)stopProcess();
+}
 
 
 
@@ -296,23 +330,4 @@ void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, i
 void KV::Rechteck(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill)
 {
 	rectangle(x1 + this->offsetX + 1, y1 + this->offsetY + 1, x2 + this->offsetX + 1, y2 + this->offsetY + 1, cframe, cfill);
-}
-
-
-
-// convert the binary representation of x to a string with the specified length
-char* KV::Binary(uint x, char length)
-{
-	// warning: this breaks for numbers with more than 64 bits (= variables)
-	char* c = new char[length+1];
-	c += length;					// last char
-
-	*c = 0;
-	do
-	{
-		*--c = '0' + (x & 1);		// 0 or 1 at the specified position
-		x >>= 1;
-	} while (--length);
-
-	return c;
 }

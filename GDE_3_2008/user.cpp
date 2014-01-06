@@ -44,7 +44,7 @@ void Zeichne_Ast(int x, int y, float n, float Tiefe, float Laenge)
 {
 	int x_rel;
 	int y_rel;
-	if(StopProcess())return;
+	if(stopProcess())return;
 	if (Tiefe > 1) {										// Stopbedingung fuer die Rekursion.
 		// Zeichnen des linken Astes.
 		x_rel = (int)(Laenge * _sinus(n + baum.Neigung_links));	// Berechnen der x-Koordinate.
@@ -109,7 +109,7 @@ void Restart()
 		  ((y > h-40)  &&	(y < h-5))
 		 )) {
 		printf(".");
-		if(StopProcess())break;
+		if(stopProcess())break;
 	};
 
 	printf("######################################\n\n");
@@ -147,7 +147,7 @@ void user_main2()
 		Zeichne_Baum();					// Den Baum zeichnen.
 		cout << "Baum gezeichnet\n";
 		Restart();						// Den "Restart"-Button malen und auf eine Aktivierung warten.
-		if(StopProcess())break;
+		if(stopProcess())break;
 		
 	}
 }

@@ -78,6 +78,9 @@
     <ClCompile Include="..\Hazard\Hazard\KV_PiGroup.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="..\Hazard\Hazard\Tools.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -96,9 +99,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\BaseException.h">
@@ -148,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="..\Hazard\Hazard\KV_PiEleLoc.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Hazard\Hazard\Tools.h">
+      <Filter>Quelldateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

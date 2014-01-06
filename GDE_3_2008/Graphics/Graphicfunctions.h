@@ -1,3 +1,5 @@
+#include "../stdafx.h"
+
 // Graphicfunctions.h : interface of the GDE functions
 //
 // In diesem Header-File sind alle Grafikfunktionen, die der Benutzer
@@ -98,4 +100,4 @@ void wait(unsigned int msecs);	// Wartet die vorgegebende Zeit in Millisekunden.
 void clrscr();					// Loescht den gesamten Zeichenbereich.
 void updatescr();				// Neuzeichnen des gesamten Zeichenbereiches.
 
-BOOL StopProcess();				// Gibt an ob ein Stopflagg gesetzt wurde
+bool stopProcess();				// Gibt an ob ein Stopflagg gesetzt wurde
