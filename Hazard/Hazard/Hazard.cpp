@@ -85,12 +85,10 @@ void user_main(void)
 
 	KV* kv = new KV(globalPIC, allCells, 30,variables);
 	kv->Print(30);
-	//system("pause");
 
 
 	// find and solve Hazards
 	allCells->findHazards();
-	//system("pause");
 
 	
 	// print Wertetabelle and KV of corrected data
@@ -105,5 +103,6 @@ void user_main(void)
 	delete globalPIC;
 	delete allCells;
 	delete variables;
+	cout << endl << endl << endl << endl;
 	return;
 }
