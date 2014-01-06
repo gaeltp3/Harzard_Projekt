@@ -3,9 +3,11 @@
 #include <algorithm>
 #include <vector>
 #include "PrimImplikant.h"
-#include "Implikant_localisation.h"
 
 using namespace std;
+
+extern uint dimension;
+extern uint numElements;
 
 bool PrimImplikant::valueAt(uint pos) {
 	for (vector<uint>::iterator i = elements.begin(); i < elements.end(); ++i)
@@ -42,30 +44,34 @@ void PrimImplikant::parser(string input) {  // Analyser
 	}
 
 	elements.push_back(implikant);
-	I_Vector.push_back(new Implikant_localisation(implikant));
 }
 
 void PrimImplikant::sort()
 {
-	sort(this->elements.begin(), this->elements.end(), PrimImplikant::compareGray);
+	std::sort(this->elements.begin(), this->elements.end(), &PrimImplikant::compareGray);
 }
 
-bool PrimImplikant::compareGray(uint &a, uint &b)
+bool PrimImplikant::compareGray(uint a, uint b)
 {
-	return (a ^ (a/2)) < (b ^ (b/2));
+	for (uint i = 1; i < dimension; i++)
+		a ^= a / 2;		// convert a from gray to binary
+	for (uint i = 1; i < dimension; i++)
+		b ^= b / 2;		// convert b from gray to binary
+	return a < b;
 }
 
 void PrimImplikant::makeLocations()
 {
 	this->sort();
-	this->locations = new vector<KV_PiEleLoc*>();
+	this->_locations = new vector<KV_PiEleLoc*>();
+	this->_locations->resize(this->elements.size());
 	for (uint i = 0; i < this->elements.size(); i++)
-		this->locations.push_back(new KV_PiEleLoc(this->elements[i]));
+		(*this->_locations)[i] = new KV_PiEleLoc(this->elements[i]);
 }
 
-vector<KV_PiEleLoc*>* locations()
+vector<KV_PiEleLoc*>* PrimImplikant::locations()
 {
-	if (this->locations == NULL)
+	if (this->_locations == NULL)
 		this->makeLocations();
-	return this->locations;
+	return this->_locations;
 }
