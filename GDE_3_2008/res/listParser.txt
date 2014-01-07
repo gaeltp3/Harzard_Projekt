@@ -1,0 +1,26 @@
+    1 Variables: a,Variable a
+ bar,Variable bar
+ char,Variable char
+ d
+Variable d
+    2 Terms:
+
+    3 "0010"Term Key 0010
+>1
+Term Value 1
+
+    4 7>Term Key 7
+1
+Term Value 1
+
+    5 14>Term Key 14
+1
+Term Value 1
+
+    6 "01xx"Term Key 01xx
+>1
+Term Value 1
+
+    7 "x000"Term Key x000
+>1Term Value 1
+

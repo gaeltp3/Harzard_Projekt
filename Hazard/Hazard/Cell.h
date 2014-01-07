@@ -3,7 +3,6 @@
 #include "PrimImplikantCollection.h"
 
 using namespace std;
-extern bool KNF;
 
 #ifndef CELL
 #define CELL
@@ -22,7 +21,7 @@ public:
 	{
 		this->index = index;
 		this->refresh(globalPIC);
-		this->value = (this->primImplikanten.size() > 0) ^ KNF;
+		this->value = this->primImplikanten.size() > 0;
 	}
 
 	PrimImplikantCollection primImplikanten;

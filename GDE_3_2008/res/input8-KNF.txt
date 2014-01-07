@@ -1,3 +1,0 @@
-Variables: a, b, c, d  , e , f, g, h
-Terms:
-"xx01xx01">0

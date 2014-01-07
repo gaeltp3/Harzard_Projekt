@@ -7,7 +7,6 @@
 using namespace std;
 
 extern uint dimension;
-extern bool KNF;
 
 void Cell::refresh(PrimImplikantCollection* &globalPIC)
 {
@@ -35,12 +34,10 @@ vector<Cell*>* Cell::getHazards(vector<Cell*> &allCells)
 
 	for (vector<Cell*>::iterator neighbor = neighbors->begin(); neighbor < neighbors->end(); neighbor++)
 	{
-		
-			if ((*neighbor)->value == KNF)
-				continue;
-			if ((*neighbor)->hasOneOfThose(this->primImplikanten) == false)
-				hazardous->push_back(*neighbor);
-		
+		if ((*neighbor)->value == false)
+			continue;
+		if ((*neighbor)->hasOneOfThose(this->primImplikanten) == false)
+			hazardous->push_back(*neighbor);
 	}
 
 	delete neighbors;
