@@ -30,7 +30,7 @@ void CellCollection::findHazards()
 		uint I = i ^ (i/2);									// transform to gray code --> Schachbrettmuster
 		Cell* currentCell = cells[I];						// this is the cell we are currently checking
 
-		if (currentCell->value == false)					// no hazard can occur
+		if (currentCell->value == KNF)					// no hazard can occur
 			continue;
 
 		cout << "   Checking cell " << I << endl;

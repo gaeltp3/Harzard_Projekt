@@ -28,7 +28,7 @@ uint Tools::GrayToBinary(uint x)
 	char r = 0;						// r = ceil(ld(x))
 	do
 		r++;
-	while (x1 >>= 1);
+	while (x1 >>= 1); // x1=x1>>1
 
 	if ((r & (r-1)) != 0)			// keine Potenz von 2
 	{
