@@ -17,30 +17,27 @@ void Wertetabelle::Print()
 {
 	printHeader();
 
+	int w = (uint)ceil(log10((float)numElements));
 	for (uint i = 0; i < numElements; i++)
 	{
-		cout << "| ";																//	=> |
-		cout << setfill(' ') << setw((uint)ceil(log10((float)numElements))) << i;	//	=>    4
-		cout << " |";																//	=>      |
-		*fot << "| ";																//	=> |
-		*fot << setfill(' ') << setw((uint)ceil(log10((float)numElements))) << i;	//	=>    4
-		*fot << " |";																//	=>      |
-		this->printI(i);															//	=>        0  1  0 0
-		cout << "| ";																//	=>                   |
-		cout << ((*this->cells)[i]->value ^ KNF);									//	=>                     1
-		cout << " |";																//	=>                       |
-		*fot << "| ";																//	=>                   |
-		*fot << ((*this->cells)[i]->value ^ KNF);									//	=>                     1
-		*fot << " |";																//	=>                       |
-		this->printPrimImplikanten(i);												//	=>                         0 0x1 4
-		cout << endl;																// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
-		*fot << endl;																// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
-
-		this->printI(i);															//	=>        0  1  0 0
-		this->printPrimImplikanten(i);												//	=>                         0 0x1 4
+		cout << "| ";											//	=> |
+		cout << setfill(' ') << setw(w) << i;					//	=>    4
+		cout << " |";											//	=>      |
+		*fot << "| ";											//	=> |
+		*fot << setfill(' ') << setw(w) << i;					//	=>    4
+		*fot << " |";											//	=>      |
+		this->printI(i);										//	=>        0  1  0 0
+		cout << "| ";											//	=>                   |
+		cout << ((*this->cells)[i]->value ^ KNF);				//	=>                     1
+		cout << " |";											//	=>                       |
+		*fot << "| ";											//	=>                   |
+		*fot << ((*this->cells)[i]->value ^ KNF);				//	=>                     1
+		*fot << " |";											//	=>                       |
+		this->printPrimImplikanten(i);							//	=>                         0 0x1 4
+		cout << endl;											// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
+		*fot << endl;											// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
 
 		if (i > 0 && i % 31 == 0 && numElements - i > 5)		// reprint header so you dont have to scroll
-			//cout << this->makeHeader() << endl;
 			printHeader();
 	}
 
