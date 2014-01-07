@@ -249,5 +249,5 @@ void updatescr()				// Neuzeichnen des gesamten Zeichenbereiches.
 }
 bool stopProcess()
 {
-	return (bool)theApp.m_stopflag ;
+	return theApp.m_stopflag == TRUE;
 }
