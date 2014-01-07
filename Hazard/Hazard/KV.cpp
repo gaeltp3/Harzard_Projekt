@@ -159,7 +159,7 @@ void KV::PrintCellValues()	// Erstellt die Werte der jeweiligen Zellen: ▯▯�
 			// Dies sind die Zellwerte:
 			///*
 			char* I = new char[2];
-			_itoa_s(this->allCells->at(i)->value, I, 2, 10);
+			_itoa_s(this->allCells->at(i)->value ^ KNF, I, 2, 10);
 			this->TextBox(XL, YT, XR, YB, 10, BLACK, TRANS, TRANS, CENTER, I);
 			delete I;
 			//*/
