@@ -161,9 +161,10 @@ void user_main(void)
 			// find and solve Hazards
 			allCells->findHazards();
 
-	
-			// print Wertetabelle and KV of corrected data
-			wt->Print();
+
+			if (allCells->hazardsFound)
+				// print Wertetabelle and KV of corrected data
+				wt->Print();
 
 			kv->Print(30 + kv->width() + 30, 30);	// Diagramm neben dem vorherigen
 

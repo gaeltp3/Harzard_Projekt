@@ -27,11 +27,13 @@ public:
 	CellCollection(PrimImplikantCollection* &globalPIC)
 	{
 		this->init(globalPIC);
+		this->hazardsFound = false;
 	};
 
 
 	vector<Cell*> cells;
 	PrimImplikantCollection* globalPIC;
+	bool hazardsFound;
 };
 
 #endif

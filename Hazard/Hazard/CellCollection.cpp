@@ -47,6 +47,7 @@ void CellCollection::findHazards()
 			printf("Hazard found! Cell %d <--> Cell %d\n", I, (*nc)->index);
 			this->globalPIC->add(I, (*nc)->index);			// add PI that solves hazard. Not quite smart...
 			(*nc)->refresh(this->globalPIC);				// refresh the foreign PIC (a PI was added)
+			this->hazardsFound = true;
 		}
 		currentCell->refresh(this->globalPIC);				// refresh the current PIC (a PI was added)
 		delete hazardousNeighbors;
