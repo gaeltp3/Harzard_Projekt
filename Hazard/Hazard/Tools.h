@@ -9,5 +9,6 @@ public:
 private:
 	static void InitGrayToBinaryTable();
 	static uint* GrayToBinaryTable;
+	static uint GrayToBinaryTableSize;
 	static uint Tools::CalcGrayToBinary(uint x);
 };

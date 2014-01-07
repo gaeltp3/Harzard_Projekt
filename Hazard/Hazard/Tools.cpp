@@ -6,6 +6,7 @@ using namespace std;
 extern uint numElements;
 
 uint* Tools::GrayToBinaryTable = NULL;
+uint Tools::GrayToBinaryTableSize = 0;
 
 // convert the binary representation of x to a string with the specified length
 char* Tools::BinaryToChars(uint x, char length)
@@ -26,14 +27,21 @@ char* Tools::BinaryToChars(uint x, char length)
 
 uint Tools::GrayToBinary(uint x)
 {
-	if (Tools::GrayToBinaryTable == NULL)
+	if (Tools::GrayToBinaryTableSize < numElements && Tools::GrayToBinaryTable != NULL)
+	{
+		delete[] Tools::GrayToBinaryTable;
 		Tools::InitGrayToBinaryTable();
+	}
+	else if (Tools::GrayToBinaryTable == NULL)
+		Tools::InitGrayToBinaryTable();
+
 	return Tools::GrayToBinaryTable[x];
 }
 
 void Tools::InitGrayToBinaryTable()
 {
 	Tools::GrayToBinaryTable = new uint[numElements];
+	Tools::GrayToBinaryTableSize = numElements;
 	for (uint i = 0; i < numElements; i++)
 		Tools::GrayToBinaryTable[i] = Tools::CalcGrayToBinary(i);
 }
