@@ -150,7 +150,7 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="..\Hazard\Hazard\Tools.h">
-      <Filter>Quelldateien</Filter>
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +168,30 @@
     </None>
     <None Include="ReadMe.txt" />
     <None Include="res\input.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input2.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input4.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input4-KNF.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input6.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input-sort.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input8.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input8-KNF.txt">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+    <None Include="res\input12.txt">
       <Filter>Ressourcendateien</Filter>
     </None>
   </ItemGroup>

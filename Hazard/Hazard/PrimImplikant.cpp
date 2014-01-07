@@ -7,9 +7,6 @@
 
 using namespace std;
 
-extern uint dimension;
-extern uint numElements;
-
 bool PrimImplikant::valueAt(uint pos) {
 	for (vector<uint>::iterator i = elements.begin(); i < elements.end(); ++i)
 		if (*i == pos)

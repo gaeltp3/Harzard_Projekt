@@ -1,0 +1,5 @@
+Variables: a, b, c, d, e, f, g, h, i, j, k, l
+Terms:
+"0x0">1
+"xx01xx01">1
+"xx01xx01xx01">1

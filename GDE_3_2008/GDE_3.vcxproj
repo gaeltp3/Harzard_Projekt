@@ -167,7 +167,15 @@
     <None Include="res\GDE_3.ico" />
     <None Include="res\GDE_3.rc2" />
     <None Include="res\GDE_3Doc.ico" />
+    <None Include="res\input-sort.txt" />
     <None Include="res\input.txt" />
+    <None Include="res\input12.txt" />
+    <None Include="res\input2.txt" />
+    <None Include="res\input4-KNF.txt" />
+    <None Include="res\input4.txt" />
+    <None Include="res\input6.txt" />
+    <None Include="res\input8-KNF.txt" />
+    <None Include="res\input8.txt" />
     <None Include="res\Toolbar.bmp" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
