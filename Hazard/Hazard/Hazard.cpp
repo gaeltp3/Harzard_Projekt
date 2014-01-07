@@ -20,32 +20,43 @@ bool fileChosen = false;
 char fnInput[256];
 
 
-int open_files(FILE * &input, FILE * &error, FILE * &list)
+int open_files(ifstream &input, ofstream &error, ofstream &list, ofstream &wt)
 {
 	if (fileChosen == true)		// don't reopen files
 		return 9;
 
 	GetCurrentDirectory(sizeof(fnInput), fnInput);
 
-	if (error == NULL)
+	if (!error.is_open())
 	{
 		char fnError[256];
 		strcpy_s(fnError, (string(fnInput) + "\\res\\errorParser.txt").c_str());
-		fopen_s(&error, fnError, "a");
-		if (error == NULL)
+		error.open(fnError, ofstream::out|ofstream::app);
+		if (!error.is_open())
 		{
 			perror("Fehler beim Öffnen der Fehlerdatei");
 			return 1;
 		}
 	}
-	if (list == NULL)
+	if (!list.is_open())
 	{
 		char fnLists[256];
 		strcpy_s(fnLists, (string(fnInput) + "\\res\\listParser.txt").c_str());
-		fopen_s(&list, fnLists, "w");
-		if (list == NULL)
+		list.open(fnLists, ofstream::out|ofstream::trunc);
+		if (!list.is_open())
 		{
 			perror("Fehler beim Öffnen der Listdatei");
+			return 1;
+		}
+	}
+	if (!wt.is_open())
+	{
+		char fnWt[256];
+		strcpy_s(fnWt, (string(fnInput) + "\\res\\Wertetabelle.txt").c_str());
+		wt.open(fnWt, ofstream::out|ofstream::trunc);
+		if (!wt.is_open())
+		{
+			perror("Fehler beim Öffnen der Wertetabellendatei");
 			return 1;
 		}
 	}
@@ -72,10 +83,10 @@ int open_files(FILE * &input, FILE * &error, FILE * &list)
 	}
 	fileChosen = true;
 
-	if (input != NULL)
-		fclose(input);
-	fopen_s(&input, fnInput, "r");
-	if (input == NULL)
+	if (input.is_open())
+		input.close();
+	input.open(fnInput, ifstream::in);
+	if (!input.is_open())
 	{
 		perror("Fehler beim Lesen der Inputdatei");
 		return 1;
@@ -92,11 +103,12 @@ void pause()
 
 void user_main(void)
 {
-	FILE * input = NULL, * error = NULL, * list = NULL;
+	ifstream fInput;
+	ofstream fError, fList, fWt;
 	KV* kv;
 	while(1)
 	{
-		switch(open_files(input, error, list))
+		switch(open_files(fInput, fError, fList, fWt))
 		{
 		case 1:		// some error
 			fileChosen = false;
@@ -114,8 +126,9 @@ void user_main(void)
 			PrimImplikantCollection* globalPIC = new PrimImplikantCollection();
 			vector<string>* variables = new vector<string>();
 
-			rewind(input);
-			CParser* parser = new CParser(input, error, list);
+			fInput.clear();
+			fInput.seekg(0, fInput.beg);
+			CParser* parser = new CParser(fInput, fError, fList);
 			int parseFailure = parser->yyparse(globalPIC, variables);
 			delete parser;
 
@@ -128,15 +141,17 @@ void user_main(void)
 				error += buf;
 				error += ")";
 				perror(error.c_str());
+				fError << error << endl;
 				continue;
 			}
 	
 			// initialize Cells
 			CellCollection* allCells = new CellCollection(globalPIC);
 
-	
+
+			fWt.seekp(0, fWt.beg);
 			// print Wertetabelle and KV of imported data
-			Wertetabelle* wt = new Wertetabelle(allCells, variables);
+			Wertetabelle* wt = new Wertetabelle(allCells, variables, fWt);
 			wt->Print();
 
 			kv = new KV(globalPIC, allCells, 30,variables);
@@ -174,7 +189,10 @@ void user_main(void)
 			if (kv != NULL)
 			delete kv;
 			kv = NULL;
-			_fcloseall();
+			fInput.close();
+			fList.close();
+			fError.close();
+			fWt.close();
 			fileChosen = false;
 			break;
 		}

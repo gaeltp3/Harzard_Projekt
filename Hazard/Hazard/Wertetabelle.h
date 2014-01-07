@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include <vector>
 #include <string>
-#include <iostream>
+#include <fstream>
 #include "PrimImplikant.h"
 #include "Cell.h"
 #include "CellCollection.h"
@@ -18,22 +18,24 @@ class Wertetabelle
 public:
 	void Print();
 
-	Wertetabelle(CellCollection* cells, vector<string>* variables)
+	Wertetabelle(CellCollection* cells, vector<string>* variables, ofstream &fWt)
 	{
 		this->cells = cells;
 		this->variables = variables;
+		this->fot = &fWt;
 	}
 
 private:
 	string makeHeader();
 	void printHeader();
-	void printI(unsigned int i);
-	void printPrimImplikanten(unsigned int i);
+	void printI(uint i);
+	void printPrimImplikanten(uint i);
 
 	CellCollection* cells;
 	vector<string>* variables;
 	vector<float> padding;
 	uint width;
+	ofstream* fot;
 };
 
 #endif

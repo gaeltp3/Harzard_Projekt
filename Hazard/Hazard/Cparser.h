@@ -35,9 +35,9 @@ public:
 		string s;								//structure
 		int i;
 	}yylval;
-	FILE *IP_Input;								//Input File
-	FILE *IP_Error;								//Error Output
-	FILE *IP_List;								//List Output
+	ifstream* IP_Input;							//Input File
+	ofstream* IP_Error;							//Error Output
+	ofstream* IP_List;							//List Output
 	int  IP_LineNumber;							//Line counter
 	int ugetflag;								//checks ungets
 	int prflag;									//controls printing
@@ -48,14 +48,14 @@ public:
 	int CParser::yylex();						//lexial analyser
 	void CParser::yyerror(char *ers);			//error reporter
 	int CParser::IP_MatchToken(string &tok);	//checks the token
-	void CParser::InitParse(FILE *inp,FILE *err,FILE *lst);
+	void CParser::InitParse(ifstream &inp,ofstream &err,ofstream &lst);
 	int	CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables);						//parser
 	void CParser::pr_tokentable();				//test output for tokens
 	void CParser::IP_init_token_table();		//loads the tokens
 	void CParser::Load_tokenentry(string str,int index);//load one token
 	void CParser::PushString(char c);			//Used for dtring assembly
 	CParser(){IP_LineNumber = 1;ugetflag=0;prflag=0;};	//Constructor
-	CParser(FILE * input, FILE * error, FILE * list)
+	CParser(ifstream &input, ofstream &error, ofstream &list)
 	{
 		this->IP_init_token_table();
 		this->InitParse(input, error, list);

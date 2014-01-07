@@ -22,19 +22,30 @@ void Wertetabelle::Print()
 		cout << "| ";																//	=> |
 		cout << setfill(' ') << setw((uint)ceil(log10((float)numElements))) << i;	//	=>    4
 		cout << " |";																//	=>      |
+		*fot << "| ";																//	=> |
+		*fot << setfill(' ') << setw((uint)ceil(log10((float)numElements))) << i;	//	=>    4
+		*fot << " |";																//	=>      |
 		this->printI(i);															//	=>        0  1  0 0
 		cout << "| ";																//	=>                   |
 		cout << ((*this->cells)[i]->value ^ KNF);									//	=>                     1
 		cout << " |";																//	=>                       |
+		*fot << "| ";																//	=>                   |
+		*fot << ((*this->cells)[i]->value ^ KNF);									//	=>                     1
+		*fot << " |";																//	=>                       |
 		this->printPrimImplikanten(i);												//	=>                         0 0x1 4
 		cout << endl;																// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
+		*fot << endl;																// ==> |  4 | 0  1  0 0  | 1 | 0 0x1 4
 
-		if (i > 0 && i % 15 == 0 && numElements - i > 5)		// reprint header so you dont have to scroll
+		this->printI(i);															//	=>        0  1  0 0
+		this->printPrimImplikanten(i);												//	=>                         0 0x1 4
+
+		if (i > 0 && i % 31 == 0 && numElements - i > 5)		// reprint header so you dont have to scroll
 			//cout << this->makeHeader() << endl;
 			printHeader();
 	}
 
 	cout << string(this->width, '-') << endl;
+	*fot << string(this->width, '-') << endl;
 }
 
 string Wertetabelle::makeHeader()
@@ -65,6 +76,10 @@ void Wertetabelle::printHeader()
 	cout << string(this->width, '-') << endl;	// repeat '-' several times	=> ---------------------
 	cout << row2 << endl;						// print header row			=> | a bärchen c d | y | PrimtImpl.
 	cout << string(this->width, '-') << endl;	// repeat '-' several times	=> ---------------------
+	
+	*fot << string(this->width, '-') << endl;	// repeat '-' several times	=> ---------------------
+	*fot << row2 << endl;						// print header row			=> | a bärchen c d | y | PrimtImpl.
+	*fot << string(this->width, '-') << endl;	// repeat '-' several times	=> ---------------------
 }
 
 void Wertetabelle::printI(uint i)
@@ -78,13 +93,18 @@ void Wertetabelle::printI(uint i)
 		row = string((uint)ceil(padding[j]) + 1, ' ') + iAtJ + string((uint)floor(padding[j]), ' ') + row;
 	}
 	cout << row;
+	*fot << row;
 }
 
-void Wertetabelle::printPrimImplikanten(unsigned int i)
+void Wertetabelle::printPrimImplikanten(uint i)
 {
 	cout << ' ';
+	*fot << ' ';
 	Cell* cell = cells->at(i);
 
-	for (unsigned int pi = 0; pi < cell->primImplikanten.size(); pi++)		// for every PrimImplikant in Cell
+	for (uint pi = 0; pi < cell->primImplikanten.size(); pi++)		// for every PrimImplikant in Cell
+	{
 		cout << cell->primImplikanten[pi]->name << " ";	
+		*fot << cell->primImplikanten[pi]->name << " ";	
+	}
 }

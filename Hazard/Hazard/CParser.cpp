@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
 #include "PrimImplikantCollection.h"
 #include "CParser.h"
 using namespace std;
@@ -56,7 +59,7 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 {
 	bool KNFset = false;
 	int tok;
-	if(prflag)fprintf(IP_List,"%5d ", IP_LineNumber);
+	if(prflag) *IP_List << setw(5) << setfill('0') << IP_LineNumber;
 
 	/*
 	*	Go parse things!
@@ -82,11 +85,11 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			switch(tok)
 			{
 			case IDENTIFIER:
-				fprintf(IP_List, "Variable %s\n", yylval.s.c_str());
+				*IP_List << "Variable " << yylval.s << endl;
 				variables->push_back(yylval.s.c_str());
 				break;
 			case TERMS:
-				fprintf(IP_List, "\n", yylval.s.c_str());
+				*IP_List << endl;
 				pState = P_TERMS_KEY;
 				break;
 			}
@@ -95,11 +98,11 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			switch(tok)
 			{
 			case STRING1:
-				fprintf(IP_List, "Term Key %s\n", yylval.s.c_str());
+				*IP_List << "Term Key " << yylval.s << endl;
 				pic->add(yylval.s.c_str());
 				break;
 			case INTEGER1:
-				fprintf(IP_List, "Term Key %d\n", (unsigned int)yylval.i);
+				*IP_List << "Term Key " << (unsigned int)yylval.i << endl;
 				pic->add(yylval.i);
 				break;
 			case (int)'>':
@@ -120,14 +123,14 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 				}
 				else if ((yylval.i == 0) ^ KNF)
 				{
-					fprintf(IP_Error, "*** FATAL ERROR *** You can only define either KNF or DNF!\n");
-					fprintf(IP_Error, "In line %3d: %s>%i\n", (int)IP_LineNumber, pic->back()->name.c_str(), yylval.i);
-					fprintf(IP_Error, "In line %3d: Defined was: %s, but now shall be changed to %s\n\n", (int)IP_LineNumber, KNF ? "KNF" : "DNF", KNF ? "DNF" : "KNF");
-					printf("*** FATAL ERROR *** You can only define either KNF or DNF!\n");
+					*IP_Error << "*** FATAL ERROR *** You can only define either KNF or DNF!" << endl;
+					*IP_Error << "In line " << setw(3) << setfill('0') << IP_LineNumber << ": " << pic->back()->name << '>' << yylval.i << endl;
+					*IP_Error << "In line " << setw(3) << setfill('0') << IP_LineNumber << ": Defined was: " << (KNF ? "KNF" : "DNF") << " but now shall be changed to " << (KNF ? "DNF" : "KNF") << endl << endl;
+					cout << "*** FATAL ERROR *** You can only define either KNF or DNF!" << endl;
 					return 1;
 				}
 
-				fprintf(IP_List, "Term Value %d\n\n",yylval.i);
+				*IP_List << "Term Value " << yylval.i << endl << endl;
 				pState = P_TERMS_KEY;
 			}
 			break;
@@ -148,16 +151,16 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
  *	It is passed two file streams, the first is where the input comes
  *	from; the second is where error messages get printed.
  */
-void CParser::InitParse(FILE *inp,FILE *err,FILE *lst)
+void CParser::InitParse(ifstream &inp, ofstream &err, ofstream &lst)
 
 {
 
 	/*
 	*	Set up the file state to something useful.
 	*/
-	IP_Input = inp;
-	IP_Error = err;
-	IP_List  = lst;
+	IP_Input = &inp;
+	IP_Error = &err;
+	IP_List  = &lst;
 
 	IP_LineNumber = 1;
 	ugetflag=0;
@@ -175,9 +178,8 @@ void CParser::InitParse(FILE *inp,FILE *err,FILE *lst)
  *	preceeded by the current filename and line number.
  */
 void CParser::yyerror(char *ers)
-
 {
-  fprintf(IP_Error,"line %d: %s\n",IP_LineNumber,ers);
+	*IP_Error << "In line " << setw(3) << setfill('0') << IP_LineNumber << ": " << ers << endl;
 }
 //------------------------------------------------------------------------
 
@@ -202,7 +204,7 @@ int CParser::yylex()
 {
 	//Locals
 	int c;
-	lexstate s;
+	lexstate s = L_START;
 	/*
 	*	Keep on sucking up characters until we find something which
 	*	explicitly forces us out of this function.
@@ -210,11 +212,12 @@ int CParser::yylex()
 	yytext = "";
 	yylval.s = "";
 	yylval.i = 0;
-	for (s = L_START; 1;){
-		c = Getc(IP_Input);
+	while(!IP_Input->eof())
+	{
+		c = (*IP_Input).get();
 		yytext = yytext + (char)c;
 		if(!ugetflag) { 
-			if(c != EOF)if(prflag)fprintf(IP_List,"%c",c);
+			if(c != EOF && prflag) *IP_List << c;
 		}else ugetflag = 0;
 		switch (s){
 		  //Starting state, look for something resembling a token.
@@ -228,7 +231,7 @@ int CParser::yylex()
 							if (c == '\n'){
 								IP_LineNumber += 1;
 								if(prflag)
-									fprintf(IP_List,"%5d ",(int)IP_LineNumber);
+									*IP_List << setw(3) << setfill('9') << IP_LineNumber;
 								s = L_START;
 								yytext = "";
 							}
@@ -252,14 +255,14 @@ int CParser::yylex()
 				else	if(c == '*')
 							s = L_TEXT_COMMENT;
 						else{
-								Ungetc(c);
-								return('/');	/* its the division operator not a comment */
+								(*IP_Input).unget();
+								return '/';		// its the division operator not a comment
 							}
 			break;
 			case L_LINE_COMMENT:
 				if ( c == '\n'){
 					s = L_START;
-					Ungetc(c);
+					(*IP_Input).unget();
 				}
 				yytext = "";
 			break;
@@ -286,7 +289,7 @@ int CParser::yylex()
 				if (isdigit(c)){
 				  break;
 				}else {
-					Ungetc(c);
+					(*IP_Input).unget();
 					yylval.s = yytext.substr(0,yytext.size()-1);
 					yylval.i = atoi(yylval.s.c_str());
 					return (INTEGER1);
@@ -301,7 +304,7 @@ int CParser::yylex()
 			case L_IDENT:
 			   if (isalpha(c) || isdigit(c) || c == '_')
 				  break;
-				Ungetc(c);
+				(*IP_Input).unget();
 				yytext = yytext.substr(0,yytext.size()-1);
 				yylval.s = yytext;
 				if (c = IP_MatchToken(yytext)){
@@ -342,9 +345,10 @@ int CParser::yylex()
 										PushString((char)c);
 			break;
 			default:
-				fprintf(IP_Error, "*** FATAL ERROR *** Wrong case label in yylex\n");
-				fprintf(IP_Error, "In line %3d: state %i", IP_LineNumber, s);
-				printf("***Fatal Error*** Wrong case label in yylex\n");
+				*IP_Error << "*** FATAL ERROR *** Wrong case label in yylex" << endl;
+				*IP_Error << "In line " << setw(3) << setfill('0') << IP_LineNumber << ": state " << s << endl;
+				cout << "***Fatal Error*** Wrong case label in yylex" << endl;
 		}
 	}
+	return 0;
 }
