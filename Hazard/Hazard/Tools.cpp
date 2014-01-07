@@ -3,6 +3,10 @@
 
 using namespace std;
 
+extern uint numElements;
+
+uint* Tools::GrayToBinaryTable = NULL;
+
 // convert the binary representation of x to a string with the specified length
 char* Tools::BinaryToChars(uint x, char length)
 {
@@ -20,9 +24,22 @@ char* Tools::BinaryToChars(uint x, char length)
 	return c;
 }
 
-// converts a gray number to its binary representation
-// yes, this is quite slow and we could generate a lookup table to speed it up.
 uint Tools::GrayToBinary(uint x)
+{
+	if (Tools::GrayToBinaryTable == NULL)
+		Tools::InitGrayToBinaryTable();
+	return Tools::GrayToBinaryTable[x];
+}
+
+void Tools::InitGrayToBinaryTable()
+{
+	Tools::GrayToBinaryTable = new uint[numElements];
+	for (uint i = 0; i < numElements; i++)
+		Tools::GrayToBinaryTable[i] = Tools::CalcGrayToBinary(i);
+}
+
+// converts a gray number to its binary representation
+uint Tools::CalcGrayToBinary(uint x)
 {
 	uint x1 = x;
 	char r = 0;						// r = ceil(ld(x))
