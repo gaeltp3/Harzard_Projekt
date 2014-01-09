@@ -60,7 +60,7 @@ void PrimImplikant::makeLocations()
 	this->_locations = new vector<KV_PiEleLoc*>();
 	this->_locations->resize(this->elements.size());
 	for (uint i = 0; i < this->elements.size(); i++)
-		(*this->_locations)[i] = new KV_PiEleLoc(this->elements[i]);
+		this->_locations->at(i) = new KV_PiEleLoc(this->elements[i]); // zu fragen
 }
 
 vector<KV_PiEleLoc*>* PrimImplikant::locations()
