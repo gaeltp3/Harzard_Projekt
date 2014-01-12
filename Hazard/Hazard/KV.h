@@ -14,39 +14,14 @@ extern bool KNF;
 
 class KV
 {
-public:
-	void Print(uint offset);							// Ausgabe-Methode, KV-Diagramm an der Position [offset  | offset]
-	void Print(uint offsetX, uint offsetY);				// Ausgabe-Methode, KV-Diagramm an der Position [offsetX | offsetY]
-	uint width();										// Gibt die Breite eines KV-Diagramms zurück (widthPx)
-	uint height();										// Gibt die Höhe   eines KV-Diagramms zurück (heightPx)
-
-	void Buttons();
-	bool StopProcess();
-
-	// Konstruktor
-	KV(PrimImplikantCollection* globalPic, CellCollection* allCells, uint size, vector<string>* &variables)
-		: edgeLength(size),
-		numVarX(((uint)floor(dimension / 2.0f))), numVarY(((uint)ceil(dimension / 2.0f))),
-		numFieldX((uint)pow(2, (float)numVarX)), numFieldY((uint)pow(2, (float)numVarY))
-	{
-		this->globalPic = globalPic;
-		this->allCells = allCells;
-		this->variables = variables;
-		Setstring_Var();
-		this->widthPx = numFieldX * (this->edgeLength + 1) + this->VarY_Length;
-		this->heightPx = numFieldY * (this->edgeLength + 1) + this->VarX_Length;
-
-		this->Clear();
-	}
-
 private:
-	PrimImplikantCollection* globalPic;
-	CellCollection* allCells;
-	vector<string>* variables;
+	PrimImplikantCollection* globalPic;	// Globale PrimImplikantCollection
+	CellCollection* allCells;			// Alle Zellen
+	vector<string>* variables;			// Variablennamen
 	
 
-	uint offsetX;						// Der freie Platz nach links in Pixeln
-	uint offsetY;						// Der freie Platz nach rechts in Pixeln
+	uint offsetX;						// Der freie Platz links vom KV-Diagramm in Pixeln
+	uint offsetY;						// Der freie Platz oben  vom KV-Diagramm in Pixeln
 
 	const uint edgeLength;				// Die Kantenlänge der einzelnen Felder
 
@@ -56,31 +31,64 @@ private:
 	const uint numFieldY;				// Wieviele Felder in Y-Richtung gezeichnet werden = pow(2, numVarY)
 	uint widthPx;						// Breite des KV-Diagramms in Pixeln
 	uint heightPx;						// Höhe   des KV-Diagramms in Pixeln
-	uint VarX_Length;					// Höhe der Variablen in X-Richtung in Pixeln
-	uint VarY_Length;					// Breite der Variablen in Y-Richtung in Pixeln
-	string string_VarX;					// Variables_String in X-Richtung
-	string string_VarY;					// Variables_String in Y-Richtung	 
+	uint VarX_Length;					// Höhe   der Variablenzeile (oben)   in Pixeln
+	uint VarY_Length;					// Breite der Variablenspalte (links) in Pixeln
+	string string_VarX;					// Variablen String oben
+	string string_VarY;					// Variablen String links
 
-	void Setstring_Var();				// Einfuegen von String_Varx & String_VarY mit Variables.
-	void PrintRaster();					// Erstellt die Felder
-	void PrintVariables();				// Erstellt die Werte der Variablen in der ersten X- und Y-Spalte
-	void PrintCellValues();				// Erstellt die Werte der jeweiligen Zellen
+	void Setstring_Var();				// Initialisieren von VarX/Y_Length und string_VarX/Y
+	void PrintRaster();					// Erstellt die Felder/das Raster
+	void PrintVariables();				// Erstellt die Werte der Variablen in der ersten Zeile und der ersten Spalte
+	void PrintCellValues();				// Erstellt die Werte in den jeweiligen Zellen
 	void PrintPrimImplikanten();		// Generiert die einzelnen PrimImplikanten-Kuller (Gruppen)
-	void PrintPrimImplikantenGroup(KV_PiGroup* &group, char random, uint &color);	// Erstellt die einzelnen PrimImplikanten-Kuller
-	void PrintString_Var();				// Erstellt den horizontalen TextVariable & vertikalen Textvariable
+	void PrintPrimImplikantenGroup(KV_PiGroup* &group, char random, uint &color);	// Druckt die einzelnen PrimImplikanten-Kuller
+	void PrintString_Var();				// Erstellt den horizontalen & vertikalen Text mit Variablennamen
 	
 	
 	
-	void Clear();
+	void Clear();						// Löscht die GDE
 
-	void Line(uint x1, uint y1, uint x2, uint y2, int color);																			// Zeichnet eine Linie mit Offset
-	void Text(uint x, uint y, uint size, int color, int bkcolor, int angle, int align, char* theText);									// Zeichnet einen Text mit Offset
-	void KV::TextBox(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);		// Zeichnet eine TextBox mit Offset
-	void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);		// Zeichnet eine TextBox mit Offset und fetter Schrift
-	void KV::Rechteck(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill);		// Zeichnet ein Rechteck mit Offset und fetter Schrift
+	void Line(uint x1, uint y1, uint x2, uint y2, int color);						// Zeichnet eine Linie mit Offset
+	void Text(uint x, uint y, uint size, int color, int bkcolor, int angle, char* theText);	// Zeichnet einen Text mit Offset
+	void KV::TextBox(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);	// Zeichnet eine TextBox mit Offset
+	void KV::TextBoxBold(uint x1, uint y1, uint x2, uint y2, uint size, int ctext, int cframe, int cfill, int flags, char* theText);	// Zeichnet eine TextBox mit Offset und fetter Schrift
+	void KV::Rectangle(uint x1, uint y1, uint x2, uint y2, int cframe, int cfill);	// Zeichnet ein Rechteck mit Offset
 
-	char* Binary(uint x, char length);	// Wie itoa(x, char[], 2), allerdings mit fester Breite
+public:
+	void Print(uint offset);							// Ausgabe-Methode, KV-Diagramm an der Position [offset  | offset]
+	void Print(uint offsetX, uint offsetY);				// Ausgabe-Methode, KV-Diagramm an der Position [offsetX | offsetY]
+	uint width();										// Gibt die Breite eines KV-Diagramms zurück (widthPx)
+	uint height();										// Gibt die Höhe   eines KV-Diagramms zurück (heightPx)
+
+	void Buttons();										// Zeichnet Buttons und wartet auf user input
+	bool StopProcess();									// Prüft das stop flag der GDE
+
+	/// <summary>
+	/// Konstruktor von KV
+	/// </summary>
+	/// <param name="globalPic">Globale PrimImplikantCollection</param>
+	/// <param name="allCells">Alle Zellen (CellCollection)</param>
+	/// <param name="size">Die Kantenlänge eines Feldes (Rastergröße)</param>
+	/// <param name="variables">Variablennamen</param>
+	KV(PrimImplikantCollection* globalPic, CellCollection* allCells, uint size, vector<string>* &variables)
+		: edgeLength(size),	// Kantenlänge festlegen
+		numVarX(((uint)floor(dimension / 2.0f))),	// Anzahl der Variablen in X- und Y-Richtung festlegen
+		numVarY(((uint) ceil(dimension / 2.0f))),	
+		numFieldX((uint)pow(2, (float)numVarX)),	// Anzahl der Felder in X- und Y-Richtung festlegen
+		numFieldY((uint)pow(2, (float)numVarY))		// = 2 ^ numVar
+	{
+		this->globalPic = globalPic;
+		this->allCells = allCells;
+		this->variables = variables;
+		this->Setstring_Var();						// Initialisiert VarY_Length und VarX_Length
+		this->widthPx = numFieldX * (this->edgeLength + 1) + this->VarY_Length;	// Breite eines KV-Diagramms
+		this->heightPx = numFieldY * (this->edgeLength + 1) + this->VarX_Length;// Höhe   eines KV-Diagramms
+
+		this->Clear();								// GDE löschen
+	}
+
 };
 
-
+#ifndef CENTER
 #define CENTER SINGLE_LINE|CENTER_ALIGN|VCENTER_ALIGN
+#endif

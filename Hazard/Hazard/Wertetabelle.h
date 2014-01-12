@@ -10,32 +10,34 @@
 
 using namespace std;
 
-#ifndef WERTETABELLE
-#define WERTETABELLE
-
+/// <summary>
+/// This class is responsible for the printing of truth tables to cout and the output file
+/// </summary>
 class Wertetabelle
 {
 public:
-	void Print();
+	void Print();							// print the complete truth table
 
+	/// <summary>
+	/// Constructor of Wertetabelle
+	/// </summary>
 	Wertetabelle(CellCollection* cells, vector<string>* variables, ofstream &fWt)
 	{
-		this->cells = cells;
+		this->cells = cells;				// store a reference to allCells (thus we will get all changes)
 		this->variables = variables;
 		this->fot = &fWt;
 	}
 
 private:
-	string makeHeader();
-	void printHeader();
-	void printI(uint i);
-	void printPrimImplikanten(uint i);
+	void makeHeader();						// Generates the header lines
+	void printHeader();						// Prints the header lines
+	void printI(uint i);					// Prints the binary representation of the specified i in table format
+	void printPrimImplikanten(uint i);		// Print all PrimImplikants that cover the specified position i
 
-	CellCollection* cells;
-	vector<string>* variables;
-	vector<float> padding;
-	uint width;
-	ofstream* fot;
+	CellCollection* cells;					// all cells
+	vector<string>* variables;				// variable names
+	vector<float> padding;					// padding depending on length of variable names
+	uint width;								// with of truth table
+	ofstream* fot;							// output file stream
+	string header;							// header line
 };
-
-#endif

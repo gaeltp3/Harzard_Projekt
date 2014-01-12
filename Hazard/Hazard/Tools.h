@@ -1,14 +1,19 @@
 #pragma once
 
+/// <summary>
+/// This is a static class that provides some methods that could be used anywhere
+/// </summary>
 class Tools
 {
 public:
-	static char* Tools::BinaryToChars(uint x, char length);
+	static char* Tools::BinaryToChars(uint x, char length);	// convert a number to a string in it's binary representation
 
-	static uint GrayToBinary(uint x);
+	static uint GrayToBinary(uint x);						// convert a gray number back to binary using a lookup table
+	static bool compareAsGray(uint a, uint b);				// compary towo gray numbers (convert it first)
 private:
-	static void InitGrayToBinaryTable();
-	static uint* GrayToBinaryTable;
-	static uint GrayToBinaryTableSize;
-	static uint Tools::CalcGrayToBinary(uint x);
+	static uint* GrayToBinaryTable;							// gray to binary lookup table
+	static uint GrayToBinaryTableSize;						// size of GrayToBinaryTable
+
+	static void InitGrayToBinaryTable();					// init GrayToBinaryTable
+	static uint Tools::ConvertGrayToBinary(uint x);			// convert a gray number back to binary
 };

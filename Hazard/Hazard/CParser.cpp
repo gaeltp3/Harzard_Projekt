@@ -86,7 +86,7 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			{
 			case IDENTIFIER:
 				*IP_List << "Variable " << yylval.s << endl;
-				variables->push_back(yylval.s.c_str());
+				variables->push_back(yylval.s.c_str());						// Add variable name to vector
 				break;
 			case TERMS:
 				*IP_List << endl;
@@ -99,10 +99,10 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			{
 			case STRING1:
 				*IP_List << "Term Key " << yylval.s << endl;
-				pic->add(yylval.s.c_str());
+				pic->add(yylval.s.c_str());									// Add PrimImplikant with string
 				break;
 			case INTEGER1:
-				*IP_List << "Term Key " << (unsigned int)yylval.i << endl;
+				*IP_List << "Term Key " << (unsigned int)yylval.i << endl;	// Add PrimImplikant with int
 				pic->add(yylval.i);
 				break;
 			case (int)'>':
@@ -114,14 +114,14 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 			}
 			break;
 		case P_TERMS_VALUE:
-			if (tok == INTEGER1)
+			if (tok == INTEGER1)				// Check whether KNF was already set and then check consitency
 			{
 				if (!KNFset)
 				{
 					KNF = (yylval.i == 0);
 					KNFset = true;
 				}
-				else if ((yylval.i == 0) ^ KNF)
+				else if ((yylval.i == 0) != KNF)
 				{
 					*IP_Error << "*** FATAL ERROR *** You can only define either KNF or DNF!" << endl;
 					*IP_Error << "In line " << setw(3) << setfill('0') << IP_LineNumber << ": " << pic->back()->name << '>' << yylval.i << endl;
@@ -137,8 +137,8 @@ int CParser::yyparse(PrimImplikantCollection* &pic, vector<string>* &variables)
 		}
 	}
 
-	dimension = variables->size();
-	numElements = (unsigned int)pow(2.0f, (int)dimension);
+	dimension = variables->size();							// set global variable dimension
+	numElements = (unsigned int)pow(2.0f, (int)dimension);	// set global variabl numElements
 	return 0;
 
 }
