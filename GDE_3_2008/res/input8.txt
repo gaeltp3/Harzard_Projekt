@@ -1,3 +1,6 @@
 Variables: a, b, c, d, e, f, g, h
 Terms:
 "xx01xx01">1
+"0X001X00">1
+"00011X00">1
+"10XX1XXX">1
