@@ -71,12 +71,12 @@ uint Tools::ConvertGrayToBinary(uint x)
 	char r = 0;						// r shall contain the position of the first positive bit + 1 in x
 	do								// do while --> ceil.	while do --> floor.
 		r++;
-	while (x1 >>= 1);				// r = ceil(ld(x))
+	while (x1 >>= 1);				// r = ceil(ld(x)) for odd number;ld(x)=ln(x)/ln(2)
 	//	r = 0 | x = 3		r = 0 | x = 5
 	//		1 | 011				1 | 101
 	//		2 | 001				2 | 010
-	//		3 | 000				3 | 001
-	//							4 | 000
+	//		2 | 000				3 | 001
+	//							3 | 000
 		
 	if ((r & (r-1)) != 0)			// if r is no multiple of 2 <-- 100 & 011 = 000 == 0     101 & 100 = 100 != 0
 	{								// we need to round r up to the next multiple of 2. Let's use same algorithm as above.
