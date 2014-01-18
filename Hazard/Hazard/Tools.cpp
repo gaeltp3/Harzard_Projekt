@@ -71,7 +71,7 @@ uint Tools::ConvertGrayToBinary(uint x)
 	char r = 0;						// r shall contain the position of the first positive bit + 1 in x
 	do								// do while --> ceil.	while do --> floor.
 		r++;
-	while (x1 >>= 1);				// r = ceil(ld(x)) for odd number;ld(x)=ln(x)/ln(2)
+	while (x1 >>= 1);				// r = ceil(ld(x)) 
 	//	r = 0 | x = 3		r = 0 | x = 5
 	//		1 | 011				1 | 101
 	//		2 | 001				2 | 010
