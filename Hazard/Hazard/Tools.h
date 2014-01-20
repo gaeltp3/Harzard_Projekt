@@ -6,10 +6,10 @@
 class Tools
 {
 public:
-	static char* Tools::BinaryToChars(uint x, char length);	// convert a number to a string in it's binary representation
+	static char* Tools::BinaryToChars(uint x, char length);	// convert a number to a string in its binary representation
 
 	static uint GrayToBinary(uint x);						// convert a gray number back to binary using a lookup table
-	static bool compareAsGray(uint a, uint b);				// compary towo gray numbers (convert it first)
+	static bool compareAsGray(uint a, uint b);				// compary two gray numbers (convert it first)
 private:
 	static uint* GrayToBinaryTable;							// gray to binary lookup table
 	static uint GrayToBinaryTableSize;						// size of GrayToBinaryTable
